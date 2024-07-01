@@ -33,19 +33,23 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container mt-5">
-        <h1>Cadastro de Técnicos</h1>
-        <form method="post">
-            <?php if (isset($mensagem)) { ?>
-                <div id="mensagem" class="alert alert-success col-6">
-                    <?= $mensagem ?>
-                </div>
-            <?php } ?>
-            <div class="col-6">
-                <label for="cad-nome-tecnico">Técnico</label>
-                <input type="text" class="form-control" name="cad-nome-tecnico" id="cad-nome-tecnico" required>
-            </div><br>
-            <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
-        </form>
+        <h1 class="text-center mb-4">Cadastro de Técnicos</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    <?php if (isset($mensagem)) { ?>
+                        <div id="mensagem" class="alert alert-success mb-3">
+                            <?= $mensagem ?>
+                        </div>
+                    <?php } ?>
+                    <div class="mb-3">
+                        <label for="cad-nome-tecnico" class="form-label">Nome do Técnico</label>
+                        <input type="text" class="form-control" name="cad-nome-tecnico" id="cad-nome-tecnico" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+        </div>
     </main>
 </body>
 </html>
