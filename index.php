@@ -30,6 +30,9 @@
                 <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
 
                 <button type="submit" name="entrar">Entrar</button>
+
+                <!-- Aqui está a imagem após o botão -->
+                <img src="assets/img/logo-dti.png" alt="Descrição da imagem" style = "height: 50px;">
             </form>
         </div>
     </div>
