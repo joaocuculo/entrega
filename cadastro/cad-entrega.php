@@ -71,9 +71,9 @@
                             <?php
                                 $sql = "SELECT * FROM tecnico ORDER BY nome";
                                 $resultado = mysqli_query($conexao, $sql);
-                                while ($linha = mysqli_fetch_array($resultado)):
-                                    $id = $linha['id'];
-                                    $nome = $linha['nome'];
+                                while ($linhaTec = mysqli_fetch_array($resultado)):
+                                    $id = $linhaTec['id'];
+                                    $nome = $linhaTec['nome'];
 
                                     echo "<option value='{$id}'>{$nome}</option>";
                                 endwhile;
