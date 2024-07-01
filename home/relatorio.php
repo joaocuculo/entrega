@@ -110,5 +110,6 @@
             </ul>
         </nav>
     </main>
+    <?php require_once("../template/rodape01.php") ?>  
 </body>
 </html>
