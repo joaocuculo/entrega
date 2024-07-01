@@ -39,29 +39,31 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container mt-5">
-        <h1>Cadastro de Usuário</h1>
-        <form method="post">
-            <?php if (isset($mensagem)) { ?>
-                <div id="mensagem" class="alert alert-success col-6">
-                    <?= $mensagem ?>
-                </div>
-            <?php } ?>    
-            <div>
-                <div class="col-6">
-                    <label for="cad-nome-usuario">Nome</label>
-                    <input type="text" class="form-control" name="cad-nome-usuario" id="cad-nome-usuario" required>
-                </div><br>
-                <div class="col-6">
-                    <label for="cad-senha">Senha</label>
-                    <input type="password" class="form-control" name="cad-senha" id="cad-senha" required>
-                </div><br>
-                <div class="col-6">
-                    <label for="cad-senha-conf">Confirme a senha</label>
-                    <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
-                </div><br>
-                <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
+        <h1 class="text-center mb-4">Cadastro de Usuário</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    <?php if (isset($mensagem)) { ?>
+                        <div id="mensagem" class="alert alert-success mb-3">
+                            <?= $mensagem ?>
+                        </div>
+                    <?php } ?>    
+                    <div class="mb-3">
+                        <label for="cad-nome-usuario" class="form-label">Nome</label>
+                        <input type="text" class="form-control" name="cad-nome-usuario" id="cad-nome-usuario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cad-senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" name="cad-senha" id="cad-senha" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cad-senha-conf" class="form-label">Confirme a senha</label>
+                        <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
             </div>
-        </form>
+        </div>
     </main>
 </body>
 </html>
