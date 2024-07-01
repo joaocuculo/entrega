@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar bg-primary border-bottom navbar-expand-lg border-body" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">DTI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,4 +28,7 @@
             <a class="navbar-brand" href="../sair.php">Sair</a>
         </div>
     </nav>
+   
+
+</nav>
 </header>
