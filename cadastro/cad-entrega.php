@@ -41,49 +41,53 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container mt-5">
-        <h1>Cadastro de Entrega</h1>
-        <form method="post">
-            <?php if (isset($mensagem)) { ?>
-                <div id="mensagem" class="alert alert-success col-6">
-                    <?= $mensagem ?>
-                </div>
-            <?php } ?>
-            <div class="col-6">
-                <label for="usuario">Usuário</label>
-                <input type="text" class="form-control" name="usuario" id="usuario" value="<?= $linha_usuario['nome'] ?>" disabled>
-            </div><br>
-            <div class="row col-6">
-                <div class="col">
-                    <label for="data">Data</label>
-                    <input type="date" class="form-control" name="data" id="data" required>
-                </div>
-                <div class="col">
-                    <label for="chamado">Chamado</label>
-                    <input type="number" class="form-control" name="chamado" id="chamado" required>
-                </div>
-            </div><br>
-            <div class="col-6">
-                <label for="tecnico">Técnico</label>
-                <select name="tecnico" id="tecnico" class="form-control" required>
-                    <option value="">Selecione</option>
-                    <?php
-                        $sql = "SELECT * FROM tecnico ORDER BY nome";
-                        $resultado = mysqli_query($conexao, $sql);
-                        while ($linha = mysqli_fetch_array($resultado)):
-                            $id = $linha['id'];
-                            $nome = $linha['nome'];
+        <h1 class="text-center mb-4">Cadastro de Entrega</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    <?php if (isset($mensagem)) { ?>
+                        <div id="mensagem" class="alert alert-success mb-3">
+                            <?= $mensagem ?>
+                        </div>
+                    <?php } ?>
+                    <div class="mb-3">
+                        <label for="usuario" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" name="usuario" id="usuario" value="<?= $linha_usuario['nome'] ?>" disabled>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="data" class="form-label">Data</label>
+                            <input type="date" class="form-control" name="data" id="data" required>
+                        </div>
+                        <div class="col">
+                            <label for="chamado" class="form-label">Chamado</label>
+                            <input type="number" class="form-control" name="chamado" id="chamado" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tecnico" class="form-label">Técnico</label>
+                        <select name="tecnico" id="tecnico" class="form-control" required>
+                            <option value="">Selecione</option>
+                            <?php
+                                $sql = "SELECT * FROM tecnico ORDER BY nome";
+                                $resultado = mysqli_query($conexao, $sql);
+                                while ($linha = mysqli_fetch_array($resultado)):
+                                    $id = $linha['id'];
+                                    $nome = $linha['nome'];
 
-                            echo "<option value='{$id}'>{$nome}</option>";
-                        endwhile;
-                    ?>
-                </select>
-            </div><br>
-            <div class="col-6">
-                <label for="recebedor">Recebedor</label>
-                <input type="text" class="form-control" name="recebedor" id="recebedor" required>
-            </div><br>
-            <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
-        </form>
+                                    echo "<option value='{$id}'>{$nome}</option>";
+                                endwhile;
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recebedor" class="form-label">Recebedor</label>
+                        <input type="text" class="form-control" name="recebedor" id="recebedor" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+        </div>
     </main>
 </body>
 </html>
