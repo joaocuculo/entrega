@@ -3,6 +3,8 @@
 
     require_once('../conexao.php');
 
+    $mensagem = "";
+
     if (isset($_POST['salvar'])) {
         
         $id = $_POST['id'];
@@ -21,11 +23,19 @@
             mysqli_query($conexao, $sql);
 
             $mensagem = "Alterado com sucesso!";
+
+            header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
+            exit();
         } else {
             $mensagem = "As senhas inseridas são diferentes!";
-        }
-
+        }    
     }
+
+    // Verifica se houve sucesso na atualização para exibir a mensagem
+    if (isset($_GET['success']) && $_GET['success'] == 'true') {
+        $mensagem = "Alterado com sucesso!";
+    }
+    
     $sql = "SELECT * FROM usuario WHERE id = " . $_GET['id'];
     $resultado = mysqli_query($conexao, $sql);
     $linha = mysqli_fetch_array($resultado);
@@ -52,11 +62,11 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
-                    <?php if (isset($mensagem)) { ?>
+                    <?php if (!empty($mensagem)) { ?>
                         <div id="mensagem" class="alert alert-success mb-3">
                             <?= $mensagem ?>
                         </div>
-                    <?php } ?>   
+                    <?php } ?>  
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <div class="mb-3">
                         <label for="edit-nome-usuario" class="form-label">Nome</label>
