@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar bg-primary border-bottom navbar-expand-lg border-body" data-bs-theme="dark">
+    <nav class="navbar bg-dark border-bottom navbar-expand-lg border-body" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">DTI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,12 +23,20 @@
                         <li><a class="dropdown-item" href="../cadastro/cad-entrega.php">Entrega</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Editar
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="../editar/edit-usuario.php">Usuário</a></li>
+                        <li><a class="dropdown-item" href="../editar/edit-tecnico.php">Técnico</a></li>
+                        <li><a class="dropdown-item" href="../editar/edit-entrega.php">Entrega</a></li>
+                    </ul>
+                </li>
             </ul>
             </div>
             <a class="navbar-brand" href="../sair.php">Sair</a>
         </div>
     </nav>
-   
-
 </nav>
 </header>
