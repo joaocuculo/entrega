@@ -3,30 +3,8 @@
 
     require_once('../conexao.php');
     
-    if (isset($_POST['salvar'])) {
+    $mensagem = "";
         
-        $id = $_POST['id'];
-        $usuario = $linha_usuario['id'];
-        $data = new DateTime($_POST['data']);
-        $chamado = $_POST['chamado'];
-        $tecnico = $_POST['tecnico'];
-        $recebedor = $_POST['recebedor'];
-        $dataString = $data->format('d/m/Y');
-        
-        $sql = "UPDATE usuario
-                   SET id_usuario = '$usuario',
-                             data = '$dataString',
-                          chamado = '$chamado',
-                       id_tecnico = '$tecnico',
-                        recebedor = '$recebedor',
-                           status = '$status'
-                 WHERE id = $id";
-        
-        mysqli_query($conexao, $sql);
-        
-        $mensagem = "Alterado com sucesso!";
-    }
-    
     $sql = "SELECT * FROM tabela WHERE id = " . $_GET['id'];
     $resultado = mysqli_query($conexao, $sql);
     $linha = mysqli_fetch_array($resultado);
@@ -41,6 +19,37 @@
     
     $dateObj = DateTime::createFromFormat('d/m/Y', $linha['data']);
     $dataFormatada = $dateObj->format('Y-m-d');
+
+    if (isset($_POST['salvar'])) {
+        
+        $id = $_POST['id'];
+        $usuario = $linha_usuario['id'];
+        $data = new DateTime($_POST['edit-data']);
+        $chamado = $_POST['edit-chamado'];
+        $tecnico = $_POST['edit-tecnico'];
+        $recebedor = $_POST['edit-recebedor'];
+        $dataString = $data->format('d/m/Y');
+        
+        $sql = "UPDATE tabela
+                   SET id_usuario = '$usuario',
+                             data = '$dataString',
+                          chamado = '$chamado',
+                       id_tecnico = '$tecnico',
+                        recebedor = '$recebedor'
+                 WHERE id = $id";
+        
+        mysqli_query($conexao, $sql);
+        
+        $mensagem = "Alterado com sucesso!";
+
+        header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
+        exit();
+    }
+
+    // Verifica se houve sucesso na atualização para exibir a mensagem
+    if (isset($_GET['success']) && $_GET['success'] == 'true') {
+        $mensagem = "Alterado com sucesso!";
+    }
 
     ?>
 <!DOCTYPE html>
@@ -65,45 +74,49 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
-                    <?php if (isset($mensagem)) { ?>
+                    <?php if (!empty($mensagem)) { ?>
                         <div id="mensagem" class="alert alert-success mb-3">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>
                     <input type="hidden" name="id" value="<?= $linha['id'] ?>">
                     <div class="mb-3">
-                        <label for="usuario" class="form-label">Usuário</label>
-                        <input type="text" class="form-control" name="usuario" id="usuario" value="<?= $linha_usuario['nome'] ?>" disabled>
+                        <label for="edit-usuario" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" name="edit-usuario" id="edit-usuario" value="<?= $linha_usuario['nome'] ?>" disabled>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <label for="data" class="form-label">Data</label>
-                            <input type="date" class="form-control" name="data" id="data" value="<?= $dataFormatada ?>" required>
+                            <label for="edit-data" class="form-label">Data</label>
+                            <input type="date" class="form-control" name="edit-data" id="edit-data" value="<?= $dataFormatada ?>" required>
                         </div>
                         <div class="col">
-                            <label for="chamado" class="form-label">Chamado</label>
-                            <input type="number" class="form-control" name="chamado" id="chamado" value="<?= $linha['chamado'] ?>" required>
+                            <label for="edit-chamado" class="form-label">Chamado</label>
+                            <input type="number" class="form-control" name="edit-chamado" id="edit-chamado" value="<?= $linha['chamado'] ?>" required>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="tecnico" class="form-label">Técnico</label>
-                        <select name="tecnico" id="tecnico" class="form-control" required>
+                        <label for="edit-tecnico" class="form-label">Técnico</label>
+                        <select name="edit-tecnico" id="edit-tecnico" class="form-control" required>
                             <option value="<?= $linha['id_tecnico'] ?>"><?= $linha_tecnico['nome'] ?></option>
                             <?php
                                 $sql = "SELECT * FROM tecnico ORDER BY nome";
                                 $resultado = mysqli_query($conexao, $sql);
                                 while ($linhaTec = mysqli_fetch_array($resultado)):
-                                    $id = $linhaTec['id'];
-                                    $nome = $linhaTec['nome'];
 
-                                    echo "<option value='{$id}'>{$nome}</option>";
+                                    if ($linhaTec['id'] != $linha['id_tecnico']) {
+                                        $id = $linhaTec['id'];
+                                        $nome = $linhaTec['nome'];
+                                        
+                                        echo "<option value='{$id}'>{$nome}</option>";
+                                    }
+                                    
                                 endwhile;
                             ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="recebedor" class="form-label">Recebedor</label>
-                        <input type="text" class="form-control" name="recebedor" id="recebedor" value="<?= $linha['recebedor'] ?>" required>
+                        <label for="edit-recebedor" class="form-label">Recebedor</label>
+                        <input type="text" class="form-control" name="edit-recebedor" id="edit-recebedor" value="<?= $linha['recebedor'] ?>" required>
                     </div>
                     <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
                 </form>
