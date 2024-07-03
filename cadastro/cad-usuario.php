@@ -1,21 +1,27 @@
 <?php
     require_once('../verifica-autenticacao.php');
-
     require_once('../conexao.php');
 
+    $mensagem = '';
+
     if (isset($_POST['cadastrar'])) {
-        
         $nome = $_POST['cad-nome-usuario'];
         $senha = $_POST['cad-senha'];
         $senhaConf = $_POST['cad-senha-conf'];
         $status = 1;
 
         if ($senhaConf == $senha) {
+            
+            $nome = mysqli_real_escape_string($conexao, $nome);
+            $senha = mysqli_real_escape_string($conexao, $senha);
+            
             $sql = "INSERT INTO usuario (nome, senha, status) VALUES ('$nome', '$senha', '$status')";
 
-            mysqli_query($conexao, $sql);
-
-            $mensagem = "Cadastrado com sucesso!";
+            if (mysqli_query($conexao, $sql)) {
+                $mensagem = "Cadastrado com sucesso!";
+            } else {
+                $mensagem = "Erro ao cadastrar usuário: " . mysqli_error($conexao);
+            }
         } else {
             $mensagem = "As senhas inseridas são diferentes!";
         }
@@ -43,8 +49,8 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
-                    <?php if (isset($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-success mb-3">
+                    <?php if (!empty($mensagem)) { ?>
+                        <div id="mensagem" class="alert alert-<?php echo (strpos($mensagem, 'sucesso') !== false) ? 'success' : 'danger'; ?> mb-3">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>    
@@ -60,7 +66,7 @@
                         <label for="cad-senha-conf" class="form-label">Confirme a senha</label>
                         <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" name="cadastrar" class="btn btn-primary">Cadastrar</button>
                 </form>
             </div>
         </div>

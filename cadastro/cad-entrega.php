@@ -84,7 +84,7 @@
                         <label for="recebedor" class="form-label">Recebedor</label>
                         <input type="text" class="form-control" name="recebedor" id="recebedor" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
                 </form>
             </div>
         </div>

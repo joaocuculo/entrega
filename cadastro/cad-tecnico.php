@@ -46,7 +46,7 @@
                         <label for="cad-nome-tecnico" class="form-label">Nome do Técnico</label>
                         <input type="text" class="form-control" name="cad-nome-tecnico" id="cad-nome-tecnico" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
                 </form>
             </div>
         </div>
