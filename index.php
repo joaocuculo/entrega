@@ -29,7 +29,7 @@
             <form action="autenticacao.php" method="post" class="box">
                 <div style="color: black;">Faça o seu login</div>
                 <?php if (isset($_GET['mensagem'])) { ?>
-                    <div id="mensagem" style="width:100%; height:25px; color:black; text-align:center; padding-top:10px; border:1px solid red; border-radius:6px;">
+                    <div id="mensagem" style="width:100%; height:25px; color:black; background-color:#f8d7da; text-align:center; padding-top:10px; border:1px solid red; border-radius:6px;">
                         <?= $_GET['mensagem'] ?>
                     </div>
                 <?php } ?>
