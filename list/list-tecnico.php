@@ -9,10 +9,10 @@
         $searchStatus = intval($_POST['search-status']);
         
         if (!empty($search)) {
-            $V_WHERE = " AND usuario.nome LIKE '%$search%'";
+            $V_WHERE = " AND tecnico.nome LIKE '%$search%'";
         }
         if (!empty($searchStatus)) {
-            $S_WHERE = " AND usuario.status = '$searchStatus'";
+            $S_WHERE = " AND tecnico.status = '$searchStatus'";
         }
     }
 
@@ -22,14 +22,14 @@
 
     $offset = ($pagina - 1) * $itens_por_pagina;
 
-    $sql_count = "SELECT COUNT(*) AS total FROM usuario WHERE 1 = 1 " . $V_WHERE . $S_WHERE;
+    $sql_count = "SELECT COUNT(*) AS total FROM tecnico WHERE 1 = 1 " . $V_WHERE . $S_WHERE;
     $resultado_count = mysqli_query($conexao, $sql_count);
     $linha_count = mysqli_fetch_assoc($resultado_count);
     $total_registros = $linha_count['total'];
 
     $total_paginas = ceil($total_registros / $itens_por_pagina);
 
-    $sql = "SELECT * FROM usuario
+    $sql = "SELECT * FROM tecnico
               WHERE 1 = 1 " . $V_WHERE . $S_WHERE . "
               LIMIT $itens_por_pagina OFFSET $offset";
     $resultado = mysqli_query($conexao, $sql);
@@ -39,7 +39,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Usuários</title>
+    <title>Listagem de Técnicos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
@@ -67,7 +67,7 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container mt-5">
-        <h1>Listagem de Usuários</h1>
+        <h1>Listagem de Técnicos</h1>
         <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
             <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
             <select class="form-select me-2" name="search-status" id="search-status">
@@ -80,7 +80,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Usuário</th>
+                    <th>Técnico</th>
                     <th>Status</th>
                 </tr>
             </thead>
