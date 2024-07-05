@@ -1,17 +1,14 @@
 <header>
     <nav class="navbar bg-dark border-bottom navbar-expand-lg border-body" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">DTI</a>
+            <a class="navbar-brand" href="../home/relatorio.php">DTI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="../home/principal.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../home/relatorio.php">Relatório</a>
+                    <a class="nav-link" href="../home/perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -25,12 +22,11 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Editar
+                        Listagem
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="../editar/edit-usuario.php">Usuário</a></li>
-                        <li><a class="dropdown-item" href="../editar/edit-tecnico.php">Técnico</a></li>
-                        <li><a class="dropdown-item" href="../editar/edit-entrega.php">Entrega</a></li>
+                        <li><a class="dropdown-item" href="../listar/list-usuario.php">Usuário</a></li>
+                        <li><a class="dropdown-item" href="../listar/list-tecnico.php">Técnico</a></li>
                     </ul>
                 </li>
             </ul>
