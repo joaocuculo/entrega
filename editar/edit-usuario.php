@@ -11,7 +11,7 @@
         $nome = $_POST['edit-nome-usuario'];
         $senha = $_POST['edit-senha'];
         $senhaConf = $_POST['edit-senha-conf'];
-        $status = 1;
+        $status = $_POST['edit-status'];
 
         if ($senhaConf == $senha) {
             $sql = "UPDATE usuario
@@ -39,6 +39,11 @@
     $sql = "SELECT * FROM usuario WHERE id = " . $_GET['id'];
     $resultado = mysqli_query($conexao, $sql);
     $linha = mysqli_fetch_array($resultado);
+    if ($linha['status'] == 1) {
+        $inputStatus = "Ativo";
+    } else {
+        $inputStatus = "Inativo";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -79,6 +84,18 @@
                     <div class="mb-3">
                         <label for="edit-senha-conf" class="form-label">Confirme a senha</label>
                         <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-status" class="form-label">Status</label>
+                        <select class="form-select me-2" name="edit-status" id="edit-status">
+                            <option selected value="<?= $linha['status'] ?>"><?= $inputStatus ?></option>
+                            <?php if ($linha['status'] == 1) {
+                                echo "<option value='2'>Inativo</option>";
+                            } else {
+                                echo "<option value='1'>Ativo</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
                 </form>
