@@ -4,6 +4,7 @@
 
     $V_WHERE = "";
     $S_WHERE = "";
+
     if (isset($_POST['pesquisar'])) {
         $search = $_POST['search'];
         $searchStatus = intval($_POST['search-status']);
@@ -14,6 +15,21 @@
         if (!empty($searchStatus)) {
             $S_WHERE = " AND usuario.status = '$searchStatus'";
         }
+    }
+
+    // Processamento dos botões Ativar e Desativar
+    if (isset($_POST['desativar'])) {
+        $idDesativar = $_POST['input-desativar'];
+
+        $sql_desativar = "UPDATE usuario SET status = 2 WHERE id = $idDesativar";
+        mysqli_query($conexao, $sql_desativar);
+    }
+
+    if (isset($_POST['ativar'])) {
+        $idAtivar = $_POST['input-ativar'];
+
+        $sql_ativar = "UPDATE usuario SET status = 1 WHERE id = $idAtivar";
+        mysqli_query($conexao, $sql_ativar);
     }
 
     $itens_por_pagina = 15;
@@ -89,18 +105,30 @@
             <tbody>
                 <?php
                     while ($linha = mysqli_fetch_array($resultado)) {
-                        if ($linha['status'] == 1) {
-                            $status = "Ativo";
-                        } else {
-                            $status = "Inativo";
-                        }
+                        $status = ($linha['status'] == 1) ? 'Ativo' : 'Inativo';
                 ?>
                 <tr>
                     <td><?= $linha['nome'] ?></td>
                     <td><?= $status ?></td>
                     <td class="d-flex justify-content-center gap-2">
-                        <abbr title="Editar"><a class="btn btn-warning" href="../editar/edit-usuario.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
-                        <abbr title="Desativar"><a class="btn btn-danger"><i class="bi bi-person-dash-fill"></i></a></abbr>
+                        <abbr title="Editar"><a class="btn btn-dark" href="../editar/edit-usuario.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
+                        <form method="post">
+                            <?php if ($status == "Ativo"): ?>
+                                <abbr title="Desativar">
+                                    <button type="submit" name="desativar" class="btn btn-danger">
+                                        <i class="bi bi-dash-circle"></i>
+                                    </button>
+                                </abbr>
+                            <?php else: ?>
+                                <abbr title="Ativar">
+                                    <button type="submit" name="ativar" class="btn btn-success">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </abbr>
+                            <?php endif; ?>
+                            <input type="hidden" name="input-desativar" value="<?= $linha['id'] ?>">
+                            <input type="hidden" name="input-ativar" value="<?= $linha['id'] ?>">
+                        </form>
                     </td>
                 </tr>
                 <?php } ?>
