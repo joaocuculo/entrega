@@ -35,6 +35,7 @@
               INNER JOIN usuario ON tabela.id_usuario = usuario.id
               INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
               WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
+              ORDER BY STR_TO_DATE(tabela.data, '%d/%m/%Y') DESC
               LIMIT $itens_por_pagina OFFSET $offset";
     $resultado = mysqli_query($conexao, $sql);
 ?>
