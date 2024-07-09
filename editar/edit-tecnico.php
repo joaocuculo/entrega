@@ -7,10 +7,11 @@
         
         $id = $_POST['id'];
         $nome = $_POST['edit-nome-tecnico'];
-        $status = 1;
+        $status = $_POST['edit-status'];
 
         $sql = "UPDATE tecnico
-                   SET nome = '$nome'
+                   SET nome = '$nome',
+                     status = '$status'
                  WHERE id = $id";
         
         mysqli_query($conexao, $sql);
@@ -20,6 +21,11 @@
     $sql = "SELECT * FROM tecnico WHERE id = " . $_GET['id'];
     $resultado = mysqli_query($conexao, $sql);
     $linha = mysqli_fetch_array($resultado);
+    if ($linha['status'] == 1) {
+        $inputStatus = "Ativo";
+    } else {
+        $inputStatus = "Inativo";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -52,6 +58,18 @@
                     <div class="mb-3">
                         <label for="edit-nome-tecnico" class="form-label">Nome do Técnico</label>
                         <input type="text" class="form-control" name="edit-nome-tecnico" id="edit-nome-tecnico" value="<?= $linha['nome'] ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-status" class="form-label">Status</label>
+                        <select class="form-select me-2" name="edit-status" id="edit-status">
+                            <option selected value="<?= $linha['status'] ?>"><?= $inputStatus ?></option>
+                            <?php if ($linha['status'] == 1) {
+                                echo "<option value='2'>Inativo</option>";
+                            } else {
+                                echo "<option value='1'>Ativo</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
                 </form>
