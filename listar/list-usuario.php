@@ -60,8 +60,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
+        * {
+            color: white;
+        }
         body {
             display: flex;
+            background-color: #000B18;
             flex-direction: column;
             min-height: 100vh;
         }
@@ -94,7 +98,7 @@
             </select>
             <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
         </form>
-        <table class="table table-striped table-bordered">
+        <table class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
                     <th class="col-6">Usuário</th>
