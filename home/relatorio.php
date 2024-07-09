@@ -35,7 +35,6 @@
               INNER JOIN usuario ON tabela.id_usuario = usuario.id
               INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
               WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
-              ORDER BY STR_TO_DATE(tabela.data, '%d/%m/%Y') DESC
               LIMIT $itens_por_pagina OFFSET $offset";
     $resultado = mysqli_query($conexao, $sql);
 ?>
@@ -48,7 +47,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
+        * {
+            color: white;
+        }
         body {
+            background-color: #000B18;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -76,20 +79,21 @@
         <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
             <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
             <select class="form-select me-2" name="search-tec" id="search-tec">
-                <option selected value="">Selecionar técnico</option>
-                <?php
-                    $sql = "SELECT * FROM tecnico ORDER BY nome";
-                    $resultadoTec = mysqli_query($conexao, $sql);
-                    while ($linha = mysqli_fetch_array($resultadoTec)):
-                        $id = $linha['id'];
-                        $nome = $linha['nome'];
-                        echo "<option value='{$id}'>{$nome}</option>";
-                    endwhile;
-                ?>
-            </select>
+    <option selected value="" style="color: black;">Selecionar técnico</option>
+    <?php
+        $sql = "SELECT * FROM tecnico ORDER BY nome";
+        $resultadoTec = mysqli_query($conexao, $sql);
+        while ($linha = mysqli_fetch_array($resultadoTec)):
+            $id = $linha['id'];
+            $nome = $linha['nome'];
+            echo "<option value='{$id}' style='color: black;'>{$nome}</option>";
+        endwhile;
+    ?>
+</select>
+
             <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
         </form>
-        <table class="table table-striped table-bordered">
+        <table class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Usuário</th>
