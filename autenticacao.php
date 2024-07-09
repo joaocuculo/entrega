@@ -18,8 +18,15 @@
             session_start();
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['nome'] = $usuario['nome'];
+            $_SESSION['status'] = $usuario['status'];
 
-            header("location: home/principal.php");
+            if ($_SESSION['status'] != 1) {
+                $mensagem = "Usuário desativado";
+                header("location: index.php?mensagem=$mensagem");
+            } else {
+                header("location: home/relatorio.php");
+            }
+
         } else {
             $mensagem = "Usuário/Senha inválidos";
             header("location: index.php?mensagem=$mensagem");
