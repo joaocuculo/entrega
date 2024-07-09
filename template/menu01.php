@@ -8,6 +8,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="../home/relatorio.php">Home</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="../home/perfil.php">Perfil</a>
                 </li>
                 <li class="nav-item dropdown">
