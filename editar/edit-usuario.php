@@ -3,46 +3,27 @@
 
     require_once('../conexao.php');
 
-    $mensagem = "";
+    // Variável para armazenar mensagem de sucesso ou erro
+    $mensagem = '';
 
-    if (isset($_POST['salvar'])) {
+    if (isset($_POST['cadastrar'])) {
         
-        $id = $_POST['id'];
-        $nome = $_POST['edit-nome-usuario'];
-        $senha = $_POST['edit-senha'];
-        $senhaConf = $_POST['edit-senha-conf'];
-        $status = $_POST['edit-status'];
+        $nome = $_POST['cad-nome-usuario'];
+        $senha = $_POST['cad-senha'];
+        $senhaConf = $_POST['cad-senha-conf'];
+        $status = 1;
 
         if ($senhaConf == $senha) {
-            $sql = "UPDATE usuario
-                       SET nome = '$nome',
-                          senha = '$senha',
-                         status = '$status'
-                     WHERE id = $id";
+            $sql = "INSERT INTO usuario (nome, senha, status) VALUES ('$nome', '$senha', '$status')";
 
-            mysqli_query($conexao, $sql);
-
-            $mensagem = "Alterado com sucesso!";
-
-            header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
-            exit();
+            if (mysqli_query($conexao, $sql)) {
+                $mensagem = "Cadastrado com sucesso!";
+            } else {
+                $mensagem = "Erro ao cadastrar usuário: " . mysqli_error($conexao);
+            }
         } else {
             $mensagem = "As senhas inseridas são diferentes!";
-        }    
-    }
-
-    // Verifica se houve sucesso na atualização para exibir a mensagem
-    if (isset($_GET['success']) && $_GET['success'] == 'true') {
-        $mensagem = "Alterado com sucesso!";
-    }
-    
-    $sql = "SELECT * FROM usuario WHERE id = " . $_GET['id'];
-    $resultado = mysqli_query($conexao, $sql);
-    $linha = mysqli_fetch_array($resultado);
-    if ($linha['status'] == 1) {
-        $inputStatus = "Ativo";
-    } else {
-        $inputStatus = "Inativo";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -50,7 +31,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuário</title>
+    <title>Cadastro de Usuário</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -58,49 +39,53 @@
             document.getElementById('mensagem').style.display = 'none';
         }, 3000);
     </script>
+    <style>
+        * {
+            color: white;
+        }
+        body {
+            background-color: #000B18;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container mt-5">
-        <h1 class="text-center mb-4">Editar Usuário</h1>
+        <h1 class="text-center mb-4">Cadastro de Usuário</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
                     <?php if (!empty($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-success mb-3">
+                        <div class="alert alert-<?php echo ($mensagem == 'Cadastrado com sucesso!') ? 'success' : 'danger'; ?> mb-3">
                             <?= $mensagem ?>
                         </div>
-                    <?php } ?>  
-                    <input type="hidden" name="id" value="<?= $linha['id'] ?>">
+                    <?php } ?>    
                     <div class="mb-3">
-                        <label for="edit-nome-usuario" class="form-label">Nome</label>
-                        <input type="text" class="form-control" name="edit-nome-usuario" id="edit-nome-usuario" value="<?= $linha['nome'] ?>" required>
+                        <label for="cad-nome-usuario" class="form-label">Nome</label>
+                        <input type="text" class="form-control" name="cad-nome-usuario" id="cad-nome-usuario" required>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-senha" class="form-label">Senha</label>
-                        <input type="password" class="form-control" name="edit-senha" id="edit-senha" value="<?= $linha['senha'] ?>" required>
+                        <label for="cad-senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" name="cad-senha" id="cad-senha" required>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-senha-conf" class="form-label">Confirme a senha</label>
-                        <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
+                        <label for="cad-senha-conf" class="form-label">Confirme a senha</label>
+                        <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-status" class="form-label">Status</label>
-                        <select class="form-select me-2" name="edit-status" id="edit-status">
-                            <option selected value="<?= $linha['status'] ?>"><?= $inputStatus ?></option>
-                            <?php if ($linha['status'] == 1) {
-                                echo "<option value='2'>Inativo</option>";
-                            } else {
-                                echo "<option value='1'>Ativo</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
+                    <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
                 </form>
             </div>
         </div>
     </main>
+
+    
 </body>
 </html>
