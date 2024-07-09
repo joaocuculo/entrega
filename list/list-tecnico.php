@@ -16,6 +16,21 @@
         }
     }
 
+    // Processamento dos botões Ativar e Desativar
+    if (isset($_POST['desativar'])) {
+        $idDesativar = $_POST['input-desativar'];
+
+        $sql_desativar = "UPDATE tecnico SET status = 2 WHERE id = $idDesativar";
+        mysqli_query($conexao, $sql_desativar);
+    }
+
+    if (isset($_POST['ativar'])) {
+        $idAtivar = $_POST['input-ativar'];
+
+        $sql_ativar = "UPDATE tecnico SET status = 1 WHERE id = $idAtivar";
+        mysqli_query($conexao, $sql_ativar);
+    }
+
     $itens_por_pagina = 15;
 
     $pagina = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -41,6 +56,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Técnicos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
         body {
@@ -80,8 +96,9 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Técnico</th>
-                    <th>Status</th>
+                    <th class="col-6">Técnico</th>
+                    <th class="col-4">Status</th>
+                    <th class="d-flex justify-content-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,6 +113,26 @@
                 <tr>
                     <td><?= $linha['nome'] ?></td>
                     <td><?= $status ?></td>
+                    <td class="d-flex justify-content-center gap-2">
+                        <abbr title="Editar"><a class="btn btn-dark" href="../editar/edit-tecnico.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
+                        <form method="post">
+                            <?php if ($status == "Ativo"): ?>
+                                <abbr title="Desativar">
+                                    <button type="submit" name="desativar" class="btn btn-danger">
+                                        <i class="bi bi-dash-circle"></i>
+                                    </button>
+                                </abbr>
+                            <?php else: ?>
+                                <abbr title="Ativar">
+                                    <button type="submit" name="ativar" class="btn btn-success">
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </abbr>
+                            <?php endif; ?>
+                            <input type="hidden" name="input-desativar" value="<?= $linha['id'] ?>">
+                            <input type="hidden" name="input-ativar" value="<?= $linha['id'] ?>">
+                        </form>
+                    </td>
                 </tr>
                 <?php } ?>
             </tbody>
