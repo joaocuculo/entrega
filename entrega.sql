@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09/07/2024 às 15:06
+-- Tempo de geração: 10/07/2024 às 21:42
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -96,20 +96,22 @@ CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `senha` varchar(100) NOT NULL,
-  `status` int(1) NOT NULL
+  `status` int(1) NOT NULL,
+  `nivel` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nome`, `senha`, `status`) VALUES
-(1, 'Joao', '1234', 1),
-(2, 'André', '4321', 1),
-(3, 'Eduardo', '2345', 1),
-(4, 'Marcos', '9876', 1),
-(5, 'José', 'jose', 2),
-(6, 'Cesar', 'soucesar', 2);
+INSERT INTO `usuario` (`id`, `nome`, `senha`, `status`, `nivel`) VALUES
+(1, 'Joao', '1234', 1, 2),
+(2, 'André', '4321', 1, 2),
+(3, 'Eduardo', '2345', 1, 1),
+(4, 'Marcos', '9876', 1, 1),
+(5, 'José', 'jose', 2, 1),
+(6, 'Cesar', 'soucesar', 2, 1),
+(7, 'Adriel', '0987', 1, 2);
 
 --
 -- Índices para tabelas despejadas
@@ -155,7 +157,7 @@ ALTER TABLE `tecnico`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restrições para tabelas despejadas
