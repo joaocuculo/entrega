@@ -19,6 +19,7 @@
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['status'] = $usuario['status'];
+            $_SESSION['nivel'] = $usuario['nivel'];
 
             if ($_SESSION['status'] != 1) {
                 $mensagem = "Usuário desativado";
