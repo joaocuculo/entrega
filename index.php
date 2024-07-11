@@ -64,7 +64,7 @@
             height: 100%;
             width: 14px;
             fill: #a5a5b0;
-            left: 105px; /* Ajusta a posição do ícone para a direita (por algum motivo aqui o left representa direita) */
+            left: 105px; /* Muda a posição do icone para a direita (por algum motivo aqui o left representa direita) */
         }
         .container .eye-slash {
             display: none;
