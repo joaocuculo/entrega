@@ -19,8 +19,9 @@
             background: #111212 !important; /* Cor preta (ou quase preta) com !important para ser prioridade e maior hierarquia */
             padding: 20px;
             border-radius: 8px;
-            transform: scale(1.1); /* Zoom de 110% */
+            transform: scale(1.0); /* Zoom de 110% */
             transform-origin: center;
+            
         }
         .form-control {
             background: none;
@@ -41,23 +42,34 @@
             display: flex;
             align-items: center;
         }
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px rgba(17, 18, 18, 0.98) inset;
+        }
+
+        input:-webkit-autofill {
+            -webkit-text-fill-color: white !important;
+        }
+
         #senha {
-            flex: 1; /* Ocupa todo o espaço disponível */
-            margin-right: 10px; /* Espaço entre o campo de senha e o botão */
+            width: 100%; /* ocupa todo o espaço disponível */
+            padding: 8px 0; /* Espaçamento interno do campo */
+            color: white; /* Cor do texto */
+            border: none; /* Remove a borda padrão */
+            border-bottom: 1px solid #000; /* Adiciona linha inferior */
+            background: none; /* Fundo transparente */
+            margin-bottom: 15px; /* Espaço inferior */
         }
-        button#mostrar-senha {
-            background-color: #007bff;
-            color: white;
-            border: 2px solid #007bff;
-            border-radius: 4px;
-            padding: 2px 4px; /* Ajuste o padding para diminuir o tamanho */
-            width: auto; /* Remova o width para que o botão se ajuste ao conteúdo */
-            font-size: 12px; /* Ajuste o tamanho da fonte */
+
+        #senha::placeholder {
+            color: white; /* Cor do placeholder */
         }
-        button#mostrar-senha:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+
+        #senha:focus {
+            outline: none;
+            border-bottom: 1px solid #007bff; /* Linha azul ao focar */
         }
+        
         body {
             overflow: hidden; /* Para esconder a barra de rolagem */
         }
@@ -79,7 +91,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.4); /* Branco com transparência de 30% */
+            background-color: rgba(0,0,0, 0.7); /* Branco com transparência de 30% */
             z-index: -1;
         }
     </style>
@@ -98,15 +110,13 @@
             <form action="autenticacao.php" method="post" class="box">
                 <div style="color: white;">Faça o seu login</div>
                 <?php if (isset($_GET['mensagem'])) { ?>
-                    <div id="mensagem" style="width:100%; height:25px; color:black; background-color:#f8d7da; text-align:center; padding-top:10px; border:1px solid red; border-radius:6px;">
+                    <div id="mensagem" style="width:100%; height:25px; color:white; background-color:red; text-align:center; padding-top:10px; border:1px solid #8f0909; border-radius:6px;">
                         <?= $_GET['mensagem'] ?>
                     </div>
                 <?php } ?>
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required>
-                <div class="password-container">
-                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
-                    <button type="button" id="mostrar-senha" class="btn btn-outline-secondary btn-sm">Mostrar</button>
-                </div>
+                <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
+
                 <button type="submit" name="entrar">Entrar</button>
 
                 <!-- Aqui está a imagem após o botão -->
@@ -114,22 +124,5 @@
             </form>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
-            const senhaInput = document.getElementById('senha');
-
-            mostrarSenhaBtn.addEventListener('click', function() {
-                if (senhaInput.type === 'password') {
-                    senhaInput.type = 'text';
-                    mostrarSenhaBtn.textContent = 'Esconder';
-                } else {
-                    senhaInput.type = 'password';
-                    mostrarSenhaBtn.textContent = 'Mostrar';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
