@@ -37,12 +37,26 @@
             outline: none;
             border-bottom: 1px solid #007bff; /* Linha azul ao focar */
         }
-        button {
+        .password-container {
+            display: flex;
+            align-items: center;
+        }
+        #senha {
+            flex: 1; /* Ocupa todo o espaço disponível */
+            margin-right: 10px; /* Espaço entre o campo de senha e o botão */
+        }
+        button#mostrar-senha {
             background-color: #007bff;
             color: white;
             border: 2px solid #007bff;
             border-radius: 4px;
-            padding: 8px 12px;
+            padding: 2px 4px; /* Ajuste o padding para diminuir o tamanho */
+            width: auto; /* Remova o width para que o botão se ajuste ao conteúdo */
+            font-size: 12px; /* Ajuste o tamanho da fonte */
+        }
+        button#mostrar-senha:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
         body {
             overflow: hidden; /* Para esconder a barra de rolagem */
@@ -65,7 +79,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.3); /* Branco com transparência de 30% */
+            background-color: rgba(255, 255, 255, 0.4); /* Branco com transparência de 30% */
             z-index: -1;
         }
     </style>
@@ -89,8 +103,10 @@
                     </div>
                 <?php } ?>
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required>
-                <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
-
+                <div class="password-container">
+                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
+                    <button type="button" id="mostrar-senha" class="btn btn-outline-secondary btn-sm">Mostrar</button>
+                </div>
                 <button type="submit" name="entrar">Entrar</button>
 
                 <!-- Aqui está a imagem após o botão -->
@@ -98,5 +114,22 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
+            const senhaInput = document.getElementById('senha');
+
+            mostrarSenhaBtn.addEventListener('click', function() {
+                if (senhaInput.type === 'password') {
+                    senhaInput.type = 'text';
+                    mostrarSenhaBtn.textContent = 'Esconder';
+                } else {
+                    senhaInput.type = 'password';
+                    mostrarSenhaBtn.textContent = 'Mostrar';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
