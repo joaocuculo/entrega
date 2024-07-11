@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-lg" style="background: linear-gradient(to right, #000000, #000646); border-bottom: 1px solid #292E36;" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg" style="background: linear-gradient(to right, #000307, #00070E);" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="../home/relatorio.php">DTI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
