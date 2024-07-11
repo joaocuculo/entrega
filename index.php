@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Entregas</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/media.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script type="text/javascript" src="js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
@@ -21,7 +21,6 @@
             border-radius: 8px;
             transform: scale(1.0); /* Zoom de 110% */
             transform-origin: center;
-            
         }
         .form-control {
             background: none;
@@ -30,6 +29,7 @@
             width: 100%;
             padding: 8px 0;
             color: white; /* Cor do texto */
+            margin-bottom: 15px; /* Espaço inferior */
         }
         .form-control::placeholder {
             color: white; /* Cor do placeholder */
@@ -39,18 +39,49 @@
             border-bottom: 1px solid #007bff; /* Linha azul ao focar */
         }
         .password-container {
+            position: absolute;
             display: flex;
             align-items: center;
         }
-
+        .password-container .container {
+            position: absolute;
+            right: 0;
+            cursor: pointer;
+        }
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        
+        }
+        .container .eye,
+        .container .eye-slash {
+            position: relative;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 14px;
+            fill: #a5a5b0;
+            left: 105px; /* Ajusta a posição do ícone para a direita (por algum motivo aqui o left representa direita) */
+        }
+        .container .eye-slash {
+            display: none;
+        }
+        .container input:checked ~ .eye {
+            display: none;
+        }
+        .container input:checked ~ .eye-slash {
+            display: block;
+        }
         input:-webkit-autofill {
             -webkit-box-shadow: 0 0 0 30px rgba(17, 18, 18, 0.98) inset;
         }
-
         input:-webkit-autofill {
             -webkit-text-fill-color: white !important;
         }
-
+        #nome,
         #senha {
             width: 100%; /* ocupa todo o espaço disponível */
             padding: 8px 0; /* Espaçamento interno do campo */
@@ -60,18 +91,20 @@
             background: none; /* Fundo transparente */
             margin-bottom: 15px; /* Espaço inferior */
         }
-
+        #nome::placeholder,
         #senha::placeholder {
             color: white; /* Cor do placeholder */
         }
-
+        #nome:focus,
         #senha:focus {
             outline: none;
             border-bottom: 1px solid #007bff; /* Linha azul ao focar */
         }
-        
         body {
             overflow: hidden; /* Para esconder a barra de rolagem */
+            margin: 0; /* Remove margens padrão */
+            padding: 0; /* Remove preenchimentos padrão */
+            font-family: Arial, sans-serif; /* Define uma fonte padrão */
         }
         .bg-image {
             position: fixed;
@@ -91,15 +124,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0, 0.7); /* Branco com transparência de 30% */
+            background-color: rgba(0,0,0, 0.4); /* preto com transparência de 70% */
             z-index: -1;
         }
     </style>
-    <script>
-        setTimeout(function() {
-            document.getElementById('mensagem').style.display = 'none';
-        }, 3000);
-    </script>
 </head>
 <body>
     <div class="bg-image"></div>
@@ -116,13 +144,32 @@
                 <?php } ?>
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required>
                 <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha" required>
-
+                <div class="password-container">
+                    <label class="container">
+                        <input type="checkbox" id="show-password">
+                        <i class="bi bi-eye-fill eye"></i>
+                        <i class="bi bi-eye-slash-fill eye-slash"></i>
+                    </label>
+                </div>
                 <button type="submit" name="entrar">Entrar</button>
-
                 <!-- Aqui está a imagem após o botão -->
-                <img src="assets/img/logo-dti.png" alt="Descrição da imagem" style="height: 50px;">
+                <img src="assets/img/logo-dti.png" alt="Logo DTI" style="height: 50px;">
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkbox = document.getElementById('show-password');
+            var senhaInput = document.getElementById('senha');
+
+            checkbox.addEventListener('change', function() {
+                senhaInput.type = this.checked ? 'text' : 'password';
+                var eye = document.querySelector('.eye');
+                var eyeSlash = document.querySelector('.eye-slash');
+                eye.classList.toggle('d-none');
+                eyeSlash.classList.toggle('d-none');
+            });
+        });
+    </script>
 </body>
 </html>
