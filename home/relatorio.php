@@ -35,6 +35,7 @@
               INNER JOIN usuario ON tabela.id_usuario = usuario.id
               INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
               WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
+              ORDER BY STR_TO_DATE(tabela.data, '%d/%m/%Y') DESC
               LIMIT $itens_por_pagina OFFSET $offset";
     $resultado = mysqli_query($conexao, $sql);
 ?>
@@ -61,6 +62,14 @@
             flex: 1; /* Faz com que o conteúdo ocupe o espaço restante vertical */
         }
 
+        a {
+            color: white;
+        }
+
+        a:hover {
+            color: #c9c9c9;
+        }
+        
         /* Estilos para o Sticky Footer */
         #sticky-footer {
             flex-shrink: 0; /* Evita que o footer seja reduzido */
@@ -79,18 +88,17 @@
         <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
             <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
             <select class="form-select me-2" name="search-tec" id="search-tec">
-    <option selected value="" style="color: black;">Selecionar técnico</option>
-    <?php
-        $sql = "SELECT * FROM tecnico ORDER BY nome";
-        $resultadoTec = mysqli_query($conexao, $sql);
-        while ($linha = mysqli_fetch_array($resultadoTec)):
-            $id = $linha['id'];
-            $nome = $linha['nome'];
-            echo "<option value='{$id}' style='color: black;'>{$nome}</option>";
-        endwhile;
-    ?>
-</select>
-
+                <option selected value="" style="color: black;">Selecionar técnico</option>
+                <?php
+                    $sql = "SELECT * FROM tecnico ORDER BY nome";
+                    $resultadoTec = mysqli_query($conexao, $sql);
+                    while ($linha = mysqli_fetch_array($resultadoTec)):
+                        $id = $linha['id'];
+                        $nome = $linha['nome'];
+                        echo "<option value='{$id}' style='color: black;'>{$nome}</option>";
+                    endwhile;
+                ?>
+            </select>
             <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
         </form>
         <table class="table table-dark table-striped table-bordered">
