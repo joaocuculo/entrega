@@ -121,7 +121,7 @@
 <body class="d-flex flex-column">
     <?php require_once("../template/menu01.php") ?>    
 
-    <main class="container mt-5">
+    <main class="container" style="margin-top: 100px;">
         <h1 class="text-center mb-4">Editar Usuário</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -137,20 +137,20 @@
                         <input type="text" class="form-control" name="edit-nome-usuario" id="edit-nome-usuario" value="<?= $linha['nome'] ?>" required>
                     </div>
                     <div class="mb-3">
-    <label for="edit-senha" class="form-label">Senha</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" name="edit-senha" id="edit-senha" value="<?= $linha['senha'] ?>" required>
-                        <button class="btn btn-outline-secondary" type="button" id="mostrar-senha">Mostrar</button>
+                        <label for="edit-senha" class="form-label">Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="edit-senha" id="edit-senha" value="<?= $linha['senha'] ?>" required>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha">Mostrar</button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                <label for="edit-senha-conf" class="form-label">Confirme a senha</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
-                    <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf">Mostrar</button>
-                </div>
-            </div>
+                    <div class="mb-3">
+                        <label for="edit-senha-conf" class="form-label">Confirme a senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf">Mostrar</button>
+                        </div>
+                    </div>
 
                     <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
                 </form>

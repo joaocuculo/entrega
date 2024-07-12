@@ -7,9 +7,10 @@
     if (isset($_POST['pesquisar'])) {
         $search = $_POST['search'];
         $tecnico = $_POST['search-tec'];
+
         
         if (!empty($search)) {
-            $V_WHERE = " AND (tabela.chamado LIKE '%$search%' OR tabela.data LIKE '%$search%')";
+            $V_WHERE = " AND (tabela.chamado LIKE '%$search%' OR tabela.data LIKE '%$search%' OR usuario.nome LIKE '%$search%' OR tabela.recebedor LIKE '%$search%')";
         }
         if (!empty($tecnico)) {
             $T_WHERE = " AND tabela.id_tecnico = '$tecnico'";
@@ -23,7 +24,10 @@
 
     $offset = ($pagina - 1) * $itens_por_pagina;
 
-    $sql_count = "SELECT COUNT(*) AS total FROM tabela WHERE 1 = 1 " . $V_WHERE . $T_WHERE;
+    $sql_count = "SELECT COUNT(*) AS total, usuario.nome AS nome_usuario 
+                    FROM tabela 
+              INNER JOIN usuario ON tabela.id_usuario = usuario.id 
+                   WHERE 1 = 1 " . $V_WHERE . $T_WHERE;
     $resultado_count = mysqli_query($conexao, $sql_count);
     $linha_count = mysqli_fetch_assoc($resultado_count);
     $total_registros = $linha_count['total'];
@@ -32,11 +36,11 @@
 
     $sql = "SELECT tabela.*, usuario.nome AS nome_usuario, tecnico.nome AS nome_tecnico
               FROM tabela
-              INNER JOIN usuario ON tabela.id_usuario = usuario.id
-              INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
-              WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
-              ORDER BY STR_TO_DATE(tabela.data, '%d/%m/%Y') DESC
-              LIMIT $itens_por_pagina OFFSET $offset";
+        INNER JOIN usuario ON tabela.id_usuario = usuario.id
+        INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
+             WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
+          ORDER BY STR_TO_DATE(tabela.data, '%d/%m/%Y') DESC
+             LIMIT $itens_por_pagina OFFSET $offset";
     $resultado = mysqli_query($conexao, $sql);
 ?>
 <!DOCTYPE html>
@@ -83,12 +87,37 @@
             color: white;
             text-align: center;
         }
+
+        /* Estilo para botões de paginação */
+        .pagination .page-link {
+            color: #f8f9fa; /* Cor do texto dos botões */
+            background-color: #343a40; /* Cor de fundo dos botões */
+            border-color: #343a40; /* Cor da borda dos botões */
+        }
+
+        .pagination .page-link:hover {
+            color: #f8f9fa; /* Cor do texto dos botões ao passar o mouse */
+            background-color: #495057; /* Cor de fundo dos botões ao passar o mouse */
+            border-color: #495057; /* Cor da borda dos botões ao passar o mouse */
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #495057; /* Cor de fundo do botão da página ativa */
+            border-color: #495057; /* Cor da borda do botão da página ativa */
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d; /* Cor do texto dos botões desabilitados */
+            pointer-events: none; /* Desabilita a ação de clique nos botões desabilitados */
+            background-color: #343a40; /* Cor de fundo dos botões desabilitados */
+            border-color: #343a40; /* Cor da borda dos botões desabilitados */
+        }
     </style>
 </head>
 <body>
     <?php require_once("../template/menu01.php") ?>    
 
-    <main class="container mt-5">
+    <main class="container" style="margin-top: 100px;">
         <h1>Relatório de Entrega</h1>
         <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
             <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
