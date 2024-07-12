@@ -28,6 +28,40 @@
             document.getElementById('mensagem').style.display = 'none';
         }, 3000);
     </script>
+    <style>
+        * {
+            color: white;
+        }
+        body {
+            background-color: #000B18;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1; /* Faz com que o conteúdo ocupe o espaço restante vertical */
+        }
+
+        p a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+            transition: 3s;
+        }
+
+        /* Estilos para o Sticky Footer */
+        #sticky-footer {
+            flex-shrink: 0; /* Evita que o footer seja reduzido */
+            padding: 1rem;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <?php require_once("../template/menu01.php") ?>    
@@ -51,5 +85,8 @@
             </div>
         </div>
     </main>
+
+    <?php require_once("../template/rodape01.php") ?>   
+
 </body>
 </html>

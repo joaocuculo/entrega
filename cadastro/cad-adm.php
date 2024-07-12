@@ -5,11 +5,11 @@
     $mensagem = '';
 
     if (isset($_POST['cadastrar'])) {
-        $nome = $_POST['cad-nome-usuario'];
+        $nome = $_POST['cad-nome-adm'];
         $senha = $_POST['cad-senha'];
         $senhaConf = $_POST['cad-senha-conf'];
         $status = 1;
-        $nivel = 1;
+        $nivel = 2;
 
         if ($senhaConf == $senha) {
             
@@ -33,7 +33,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuário</title>
+    <title>Cadastro de Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -80,7 +80,7 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container mt-5">
-        <h1 class="text-center mb-4">Cadastro de Usuário</h1>
+        <h1 class="text-center mb-4">Cadastro de Administrador</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
@@ -90,8 +90,8 @@
                         </div>
                     <?php } ?>    
                     <div class="mb-3">
-                        <label for="cad-nome-usuario" class="form-label">Nome</label>
-                        <input type="text" class="form-control" name="cad-nome-usuario" id="cad-nome-usuario" required>
+                        <label for="cad-nome-adm" class="form-label">Nome</label>
+                        <input type="text" class="form-control" name="cad-nome-adm" id="cad-nome-adm" required>
                     </div>
                     <div class="mb-3">
                         <label for="cad-senha" class="form-label">Senha</label>
@@ -108,6 +108,6 @@
     </main>
 
     <?php require_once("../template/rodape01.php") ?>   
-
+        
 </body>
 </html>
