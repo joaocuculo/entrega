@@ -46,6 +46,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório de Entrega</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
         * {
@@ -68,6 +69,10 @@
 
         a:hover {
             color: #c9c9c9;
+        }
+        
+        option {
+            color: black;
         }
         
         /* Estilos para o Sticky Footer */
@@ -95,7 +100,7 @@
                     while ($linha = mysqli_fetch_array($resultadoTec)):
                         $id = $linha['id'];
                         $nome = $linha['nome'];
-                        echo "<option value='{$id}' style='color: black;'>{$nome}</option>";
+                        echo "<option value='{$id}'>{$nome}</option>";
                     endwhile;
                 ?>
             </select>
@@ -109,6 +114,7 @@
                     <th>Chamado</th>
                     <th>Técnico</th>
                     <th>Recebedor</th>
+                    <th class="d-flex justify-content-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -121,6 +127,9 @@
                     <td><a href="http://sup.umuarama.pr.gov.br/scp/tickets.php?id=<?= $linha['chamado'] ?>" target="_blank"><?= $linha['chamado'] ?></a></td>
                     <td><?= $linha['nome_tecnico'] ?></td>
                     <td><?= $linha['recebedor'] ?></td>
+                    <td class="d-flex justify-content-center gap-2">
+                        <abbr title="Editar"><a class="btn btn-primary" href="../editar/edit-entrega.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
+                    </td>
                 </tr>
                 <?php } ?>
             </tbody>
@@ -143,6 +152,8 @@
             </ul>
         </nav>
     </main>
+
     <?php require_once("../template/rodape01.php") ?>  
+    
 </body>
 </html>
