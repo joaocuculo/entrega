@@ -62,6 +62,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mostrarSenhaConfBtn = document.getElementById('mostrar-senha-conf');
+            const senhaConfInput = document.getElementById('edit-senha-conf');
+
+            mostrarSenhaConfBtn.addEventListener('click', function() {
+                if (senhaConfInput.type === 'password') {
+                    senhaConfInput.type = 'text';
+                    mostrarSenhaConfBtn.textContent = 'Esconder';
+                } else {
+                    senhaConfInput.type = 'password';
+                    mostrarSenhaConfBtn.textContent = 'Mostrar';
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
+            const senhaInput = document.getElementById('edit-senha');
+
+            mostrarSenhaBtn.addEventListener('click', function() {
+                if (senhaInput.type === 'password') {
+                    senhaInput.type = 'text';
+                    mostrarSenhaBtn.textContent = 'Esconder';
+                } else {
+                    senhaInput.type = 'password';
+                    mostrarSenhaBtn.textContent = 'Mostrar';
+                }
+            });
+        });
+
         setTimeout(function() {
             document.getElementById('mensagem').style.display = 'none';
         }, 3000);
@@ -106,7 +136,7 @@
 <body>
     <?php require_once("../template/menu01.php") ?>    
 
-    <main class="container mt-5">
+    <main class="container" style="margin-top: 100px;">
         <h1 class="text-center mb-4">Editar Usuário</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -123,11 +153,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="edit-senha" class="form-label">Senha</label>
-                        <input type="password" class="form-control" name="edit-senha" id="edit-senha" value="<?= $linha['senha'] ?>" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="edit-senha" id="edit-senha" value="<?= $linha['senha'] ?>" required>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha">Mostrar</button>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="edit-senha-conf" class="form-label">Confirme a senha</label>
-                        <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf">Mostrar</button>
+                        </div>
                     </div>
                     <div class="mb-3 row">
                         <div class="col">

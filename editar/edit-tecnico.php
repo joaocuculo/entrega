@@ -80,7 +80,7 @@
 <body>
     <?php require_once("../template/menu01.php") ?>    
 
-    <main class="container mt-5">
+    <main class="container" style="margin-top: 100px;">
         <h1 class="text-center mb-4">Editar Técnico</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
