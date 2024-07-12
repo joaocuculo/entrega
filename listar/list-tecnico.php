@@ -73,6 +73,16 @@
             flex: 1; /* Faz com que o conteúdo ocupe o espaço restante vertical */
         }
 
+        p a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+            transition: 3s;
+        }
+
         /* Estilos para o Sticky Footer */
         #sticky-footer {
             flex-shrink: 0; /* Evita que o footer seja reduzido */
@@ -80,6 +90,10 @@
             background-color: #343a40;
             color: white;
             text-align: center;
+        }
+
+        option {
+            color: black;
         }
     </style>
 </head>
@@ -102,7 +116,9 @@
                 <tr>
                     <th class="col-6">Técnico</th>
                     <th class="col-4">Status</th>
-                    <th class="d-flex justify-content-center">Ações</th>
+                    <?php if ($_SESSION['nivel'] == 2): ?>
+                        <th class="d-flex justify-content-center">Ações</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -117,26 +133,28 @@
                 <tr>
                     <td><?= $linha['nome'] ?></td>
                     <td><?= $status ?></td>
-                    <td class="d-flex justify-content-center gap-2">
-                        <abbr title="Editar"><a class="btn btn-dark" href="../editar/edit-tecnico.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
-                        <form method="post">
-                            <?php if ($status == "Ativo"): ?>
-                                <abbr title="Desativar">
-                                    <button type="submit" name="desativar" class="btn btn-danger">
-                                        <i class="bi bi-dash-circle"></i>
-                                    </button>
-                                </abbr>
-                            <?php else: ?>
-                                <abbr title="Ativar">
-                                    <button type="submit" name="ativar" class="btn btn-success">
-                                        <i class="bi bi-plus-circle"></i>
-                                    </button>
-                                </abbr>
-                            <?php endif; ?>
-                            <input type="hidden" name="input-desativar" value="<?= $linha['id'] ?>">
-                            <input type="hidden" name="input-ativar" value="<?= $linha['id'] ?>">
-                        </form>
-                    </td>
+                    <?php if ($_SESSION['nivel'] == 2): ?>
+                        <td class="d-flex justify-content-center gap-2">
+                            <abbr title="Editar"><a class="btn btn-primary" href="../editar/edit-tecnico.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
+                            <form method="post">
+                                <?php if ($status == "Ativo"): ?>
+                                    <abbr title="Desativar">
+                                        <button type="submit" name="desativar" class="btn btn-danger">
+                                            <i class="bi bi-dash-circle"></i>
+                                        </button>
+                                    </abbr>
+                                <?php else: ?>
+                                    <abbr title="Ativar">
+                                        <button type="submit" name="ativar" class="btn btn-success">
+                                            <i class="bi bi-plus-circle"></i>
+                                        </button>
+                                    </abbr>
+                                <?php endif; ?>
+                                <input type="hidden" name="input-desativar" value="<?= $linha['id'] ?>">
+                                <input type="hidden" name="input-ativar" value="<?= $linha['id'] ?>">
+                            </form>
+                        </td>
+                    <?php endif; ?>
                 </tr>
                 <?php } ?>
             </tbody>

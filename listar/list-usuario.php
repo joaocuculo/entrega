@@ -64,14 +64,24 @@
             color: white;
         }
         body {
-            display: flex;
             background-color: #000B18;
+            display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
         main {
             flex: 1; /* Faz com que o conteúdo ocupe o espaço restante vertical */
+        }
+
+        p a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+            transition: 3s;
         }
 
         /* Estilos para o Sticky Footer */
@@ -81,6 +91,10 @@
             background-color: #343a40;
             color: white;
             text-align: center;
+        }
+
+        option {
+            color: black;
         }
     </style>
 </head>
@@ -103,7 +117,10 @@
                 <tr>
                     <th class="col-6">Usuário</th>
                     <th class="col-4">Status</th>
-                    <th class="d-flex justify-content-center">Ações</th>
+                    <?php if ($_SESSION['nivel'] == 2): ?>
+                        <th class="d-flex justify-content-center">Ações</th>
+                    <?php endif; ?>
+                    <th style="text-align:center;">Admin</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,10 +131,11 @@
                 <tr>
                     <td><?= $linha['nome'] ?></td>
                     <td><?= $status ?></td>
-                    <td class="d-flex justify-content-center gap-2">
-                        <abbr title="Editar"><a class="btn btn-dark" href="../editar/edit-usuario.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
-                        <form method="post">
-                            <?php if ($status == "Ativo"): ?>
+                    <?php if ($_SESSION['nivel'] == 2): ?>
+                        <td class="d-flex justify-content-center gap-2">
+                            <abbr title="Editar"><a class="btn btn-primary" href="../editar/edit-usuario.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
+                            <form method="post">
+                                <?php if ($status == "Ativo"): ?>
                                 <abbr title="Desativar">
                                     <button type="submit" name="desativar" class="btn btn-danger">
                                         <i class="bi bi-dash-circle"></i>
@@ -129,11 +147,17 @@
                                         <i class="bi bi-plus-circle"></i>
                                     </button>
                                 </abbr>
-                            <?php endif; ?>
-                            <input type="hidden" name="input-desativar" value="<?= $linha['id'] ?>">
-                            <input type="hidden" name="input-ativar" value="<?= $linha['id'] ?>">
-                        </form>
-                    </td>
+                                <?php endif; ?>
+                                <input type="hidden" name="input-desativar" value="<?= $linha['id'] ?>">
+                                <input type="hidden" name="input-ativar" value="<?= $linha['id'] ?>">
+                            </form>
+                        </td>
+                    <?php endif; ?>
+                    <?php if ($linha['nivel'] == 2): ?>
+                        <td style="text-align:center;"><i class="bi bi-star-fill"></i></td>
+                    <?php else: ?>
+                            <td style="text-align:center;"><i class="bi bi-star"></i></td>
+                    <?php endif; ?>
                 </tr>
                 <?php } ?>
             </tbody>
