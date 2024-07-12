@@ -100,7 +100,7 @@
 <body>
     <?php require_once("../template/menu01.php") ?>    
 
-    <main class="container mt-5">
+    <main class="container" style="margin-top: 100px;">
         <h1>Listagem de Técnicos</h1>
         <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
             <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">

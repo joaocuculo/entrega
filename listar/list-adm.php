@@ -100,7 +100,7 @@
 <body>
     <?php require_once("../template/menu01.php") ?>    
 
-    <main class="container mt-5">
+    <main class="container" style="margin-top: 100px;">
         <h1>Listagem de Administradores</h1>
         <div class="d-flex justify-content-between align-items-end mb-2">
             <form class="d-flex col-6" method="post" role="search">
