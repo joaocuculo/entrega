@@ -54,7 +54,7 @@
         .container .eye,
         .container .eye-slash {
             position: relative;
-            top: -20; /* para o icone do olho ir para cima tem que por o numero do top no negativo */
+            top: -21; /* para o icone do olho ir para cima tem que por o numero do top no negativo */
             right: 0;
             height: 100%;
             width: 14px;
