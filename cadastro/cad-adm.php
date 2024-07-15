@@ -1,32 +1,31 @@
 <?php
-    require_once('../verifica-autenticacao.php');
-    require_once('../conexao.php');
+require_once('../verifica-autenticacao.php');
+require_once('../conexao.php');
 
-    $mensagem = '';
+$mensagem = '';
 
-    if (isset($_POST['cadastrar'])) {
-        $nome = $_POST['cad-nome-adm'];
-        $senha = $_POST['cad-senha'];
-        $senhaConf = $_POST['cad-senha-conf'];
-        $status = 1;
-        $nivel = 2;
+if (isset($_POST['cadastrar'])) {
+    $nome = $_POST['cad-nome-adm'];
+    $senha = $_POST['cad-senha'];
+    $senhaConf = $_POST['cad-senha-conf'];
+    $status = 1;
+    $nivel = 2;
 
-        if ($senhaConf == $senha) {
-            
-            $nome = mysqli_real_escape_string($conexao, $nome);
-            $senha = mysqli_real_escape_string($conexao, $senha);
-            
-            $sql = "INSERT INTO usuario (nome, senha, status, nivel) VALUES ('$nome', '$senha', '$status', '$nivel')";
+    if ($senhaConf == $senha) {
+        $nome = mysqli_real_escape_string($conexao, $nome);
+        $senha = mysqli_real_escape_string($conexao, $senha);
+        
+        $sql = "INSERT INTO usuario (nome, senha, status, nivel) VALUES ('$nome', '$senha', '$status', '$nivel')";
 
-            if (mysqli_query($conexao, $sql)) {
-                $mensagem = "Cadastrado com sucesso!";
-            } else {
-                $mensagem = "Erro ao cadastrar usuário: " . mysqli_error($conexao);
-            }
+        if (mysqli_query($conexao, $sql)) {
+            $mensagem = "Cadastrado com sucesso!";
         } else {
-            $mensagem = "As senhas inseridas são diferentes!";
+            $mensagem = "Erro ao cadastrar usuário: " . mysqli_error($conexao);
         }
+    } else {
+        $mensagem = "As senhas inseridas são diferentes!";
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -37,8 +36,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
+            const senhaInput = document.getElementById('cad-senha');
+            mostrarSenhaBtn.addEventListener('click', function() {
+                senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+                mostrarSenhaBtn.textContent = senhaInput.type === 'text' ? 'Esconder' : 'Mostrar';
+            });
+
+            const mostrarSenhaConfBtn = document.getElementById('mostrar-senha-conf');
+            const senhaConfInput = document.getElementById('cad-senha-conf');
+            mostrarSenhaConfBtn.addEventListener('click', function() {
+                senhaConfInput.type = senhaConfInput.type === 'password' ? 'text' : 'password';
+                mostrarSenhaConfBtn.textContent = senhaConfInput.type === 'text' ? 'Esconder' : 'Mostrar';
+            });
+        });
+
         setTimeout(function() {
-            document.getElementById('mensagem').style.display = 'none';
+            const mensagem = document.getElementById('mensagem');
+            if (mensagem) {
+                mensagem.style.display = 'none';
+            }
         }, 3000);
     </script>
     <style>
@@ -95,11 +113,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="cad-senha" class="form-label">Senha</label>
-                        <input type="password" class="form-control" name="cad-senha" id="cad-senha" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="cad-senha" id="cad-senha" required>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha">Mostrar</button>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="cad-senha-conf" class="form-label">Confirme a senha</label>
-                        <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf">Mostrar</button>
+                        </div>
                     </div>
                     <button type="submit" name="cadastrar" class="btn btn-primary">Cadastrar</button>
                 </form>
