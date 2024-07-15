@@ -85,7 +85,7 @@
             <div class="col-md-6">
                 <form method="post">
                     <?php if (!empty($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-<?php echo (strpos($mensagem, 'sucesso') !== false) ? 'success' : 'danger'; ?> mb-3">
+                        <div id="mensagem" class="alert alert-<?php echo (strpos($mensagem, 'sucesso') !== false) ? 'success' : 'danger'; ?> mb-3" style="background-color:#051B11; color:white;">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>    
