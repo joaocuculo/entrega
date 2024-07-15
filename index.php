@@ -148,7 +148,8 @@
                 </div>
                 <button type="submit" name="entrar">Entrar</button>
                 <!-- Aqui está a imagem após o botão -->
-                <img src="assets/img/logo-dti.png" alt="Logo DTI" style="height: 55px;">
+                <img src="assets/img/logo-dti-2.png" alt="Logo DTI" style="height: 55px;">
+                
             </form>
         </div>
     </div>
