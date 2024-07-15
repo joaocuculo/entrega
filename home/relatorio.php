@@ -18,6 +18,13 @@
 
     }
 
+    if (isset($_GET['id'])) {
+        
+        $sql = "DELETE FROM tabela WHERE id = " . $_GET['id'];
+        mysqli_query($conexao, $sql);
+        $mensagem = "Exclusão realizada com sucesso!";
+    }
+
     $itens_por_pagina = 15;
 
     $pagina = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -52,6 +59,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        setTimeout(function() {
+            document.getElementById('mensagem').style.display = 'none';
+        }, 3000);
+    </script>
     <style>
         * {
             color: white;
@@ -118,6 +130,11 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container" style="margin-top: 100px;">
+        <?php if (!empty($mensagem)) { ?>
+            <div id="mensagem" class="alert alert-<?php echo (strpos($mensagem, 'sucesso') !== false) ? 'success' : 'danger'; ?> mb-3" style="background-color:#051B11; color:white;">
+                <?= $mensagem ?>
+            </div>
+        <?php } ?>   
         <h1>Relatório de Entrega</h1>
         <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
             <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
@@ -158,6 +175,9 @@
                     <td><?= $linha['recebedor'] ?></td>
                     <td class="d-flex justify-content-center gap-2">
                         <abbr title="Editar"><a class="btn btn-primary" href="../editar/edit-entrega.php?id=<?= $linha['id'] ?>"><i class="bi bi-pencil-fill"></i></a></abbr>
+                        <?php if ($_SESSION['nivel'] == 2): ?>
+                            <abbr title="Deletar"><a class="btn btn-danger"  onclick="return confirm('Confirmar exclusão?')" href="relatorio.php?id=<?= $linha['id'] ?>"><i class="bi bi-trash-fill"></i></a></abbr>
+                        <?php endif; ?>    
                     </td>
                 </tr>
                 <?php } ?>
