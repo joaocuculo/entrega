@@ -18,10 +18,10 @@
                         Cadastros
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="../cadastro/cad-usuario.php">Usuário</a></li>
-                        <li><a class="dropdown-item" href="../cadastro/cad-tecnico.php">Técnico</a></li>
                         <li><a class="dropdown-item" href="../cadastro/cad-entrega.php">Entrega</a></li>
                         <?php if ($_SESSION['nivel'] == 2): ?>
+                            <li><a class="dropdown-item" href="../cadastro/cad-usuario.php">Usuário</a></li>
+                            <li><a class="dropdown-item" href="../cadastro/cad-tecnico.php">Técnico</a></li>
                             <li><a class="dropdown-item" href="../cadastro/cad-adm.php">Administrador</a></li>
                         <?php endif; ?>
                     </ul>
