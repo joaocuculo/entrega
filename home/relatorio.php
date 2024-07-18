@@ -8,46 +8,64 @@
         $search = $_POST['search'];
         $tecnico = $_POST['search-tec'];
 
-        
         if (!empty($search)) {
             $V_WHERE = " AND (tabela.chamado LIKE '%$search%' OR tabela.data LIKE '%$search%' OR usuario.nome LIKE '%$search%' OR tabela.recebedor LIKE '%$search%')";
         }
         if (!empty($tecnico)) {
             $T_WHERE = " AND tabela.id_tecnico = '$tecnico'";
         }
-
     }
 
     if (isset($_GET['id'])) {
-        
         $sql = "DELETE FROM tabela WHERE id = " . $_GET['id'];
         mysqli_query($conexao, $sql);
         $mensagem = "Exclusão realizada com sucesso!";
     }
 
     $itens_por_pagina = 15;
-
     $pagina = isset($_GET['page']) ? $_GET['page'] : 1;
-
     $offset = ($pagina - 1) * $itens_por_pagina;
 
     $sql_count = "SELECT COUNT(*) AS total, usuario.nome AS nome_usuario 
                     FROM tabela 
-              INNER JOIN usuario ON tabela.id_usuario = usuario.id 
-                   WHERE 1 = 1 " . $V_WHERE . $T_WHERE;
+                    INNER JOIN usuario ON tabela.id_usuario = usuario.id 
+                    WHERE 1 = 1 " . $V_WHERE . $T_WHERE;
     $resultado_count = mysqli_query($conexao, $sql_count);
     $linha_count = mysqli_fetch_assoc($resultado_count);
     $total_registros = $linha_count['total'];
-
     $total_paginas = ceil($total_registros / $itens_por_pagina);
 
+    $sort_col = isset($_GET['sort_col']) ? $_GET['sort_col'] : 1;
+    $sort_order = isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC';
+
+    switch ($sort_col) {
+        case 0:
+            $sort_col = 'usuario.nome';
+            break;
+        case 1:
+            $sort_col = 'STR_TO_DATE(tabela.data, "%d/%m/%Y")';
+            break;
+        case 2:
+            $sort_col = 'tabela.chamado';
+            break;
+        case 3:
+            $sort_col = 'tecnico.nome';
+            break;
+        case 4:
+            $sort_col = 'tabela.recebedor';
+            break;
+        default:
+            $sort_col = 'STR_TO_DATE(tabela.data, "%d/%m/%Y")';
+    }
+
     $sql = "SELECT tabela.*, usuario.nome AS nome_usuario, tecnico.nome AS nome_tecnico
-              FROM tabela
-        INNER JOIN usuario ON tabela.id_usuario = usuario.id
-        INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
-             WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
-          ORDER BY STR_TO_DATE(tabela.data, '%d/%m/%Y') DESC
-             LIMIT $itens_por_pagina OFFSET $offset";
+            FROM tabela
+            INNER JOIN usuario ON tabela.id_usuario = usuario.id
+            INNER JOIN tecnico ON tabela.id_tecnico = tecnico.id
+            WHERE 1 = 1 " . $V_WHERE . $T_WHERE . "
+            ORDER BY $sort_col $sort_order
+            LIMIT $itens_por_pagina OFFSET $offset";
+
     $resultado = mysqli_query($conexao, $sql);
 ?>
 <!DOCTYPE html>
@@ -63,6 +81,41 @@
         setTimeout(function() {
             document.getElementById('mensagem').style.display = 'none';
         }, 3000);
+
+        function sortTable(columnIndex) {
+            let currentSortCol = <?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '1' ?>;
+            let currentSortOrder = '<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC' ?>';
+
+            let sortOrder = 'ASC';
+            if (currentSortCol == columnIndex) {
+                sortOrder = currentSortOrder === 'ASC' ? 'DESC' : 'ASC';
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('sort_col', columnIndex);
+            urlParams.set('sort_order', sortOrder);
+            window.location.search = urlParams.toString();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentSortCol = '<?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '1' ?>';
+            const currentSortOrder = '<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC' ?>';
+
+            const headers = document.querySelectorAll(".sortable");
+            headers.forEach((header, index) => {
+                if (index == currentSortCol) {
+                    header.classList.add(currentSortOrder.toLowerCase());
+                    const icon = header.querySelector('.sort-icon');
+                    if (currentSortOrder === 'ASC') {
+                        icon.classList.remove('bi-arrow-down');
+                        icon.classList.add('bi-arrow-up');
+                    } else {
+                        icon.classList.remove('bi-arrow-up');
+                        icon.classList.add('bi-arrow-down');
+                    }
+                }
+            });
+        });
     </script>
     <style>
         * {
@@ -89,6 +142,27 @@
         
         option {
             color: black;
+        }
+
+        th, td {
+            text-align: left;
+            position: relative;
+        }
+        .sort-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 5px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .sortable {
+            position: relative;
+            cursor: pointer;
+        }
+        .sortable:hover .sort-icon {
+            opacity: 1;
         }
         
         /* Estilos para o Sticky Footer */
@@ -136,30 +210,33 @@
             </div>
         <?php } ?>   
         <h1>Relatório de Entrega</h1>
-        <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
-            <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
-            <select class="form-select me-2" name="search-tec" id="search-tec">
-                <option selected value="" style="color: black;">Selecionar técnico</option>
-                <?php
-                    $sql = "SELECT * FROM tecnico ORDER BY nome";
-                    $resultadoTec = mysqli_query($conexao, $sql);
-                    while ($linha = mysqli_fetch_array($resultadoTec)):
-                        $id = $linha['id'];
-                        $nome = $linha['nome'];
-                        echo "<option value='{$id}'>{$nome}</option>";
-                    endwhile;
-                ?>
-            </select>
-            <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
-        </form>
-        <table class="table table-dark table-striped table-bordered">
-            <thead>
+        <div class="d-flex justify-content-between align-items-end mb-2">
+            <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
+                <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
+                <select class="form-select me-2" name="search-tec" id="search-tec">
+                    <option selected value="" style="color: black;">Selecionar técnico</option>
+                    <?php
+                        $sql = "SELECT * FROM tecnico ORDER BY nome";
+                        $resultadoTec = mysqli_query($conexao, $sql);
+                        while ($linha = mysqli_fetch_array($resultadoTec)):
+                            $id = $linha['id'];
+                            $nome = $linha['nome'];
+                            echo "<option value='{$id}'>{$nome}</option>";
+                        endwhile;
+                    ?>
+                </select>
+                <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
+            </form>
+            <a href="../cadastro/cad-entrega.php" class="btn btn-success"><i class="bi bi-plus-lg"></i> Cadastrar Entrega</a>
+        </div>
+        <table id="tabela" class="table table-dark table-striped table-bordered">
+            <thead> 
                 <tr>
-                    <th>Usuário</th>
-                    <th>Data da Entrega</th>
-                    <th>Chamado</th>
-                    <th>Técnico</th>
-                    <th>Recebedor</th>
+                    <th id="header0" onclick="sortTable(0)" class="sortable asc">Usuário <i class="bi bi-arrow-down sort-icon"></th>
+                    <th id="header1" onclick="sortTable(1)" class="sortable">Data da Entrega <i class="bi bi-arrow-down sort-icon"></th>
+                    <th id="header2" onclick="sortTable(2)" class="sortable">Chamado <i class="bi bi-arrow-down sort-icon"></th>
+                    <th id="header3" onclick="sortTable(3)" class="sortable">Técnico <i class="bi bi-arrow-down sort-icon"></th>
+                    <th id="header4" onclick="sortTable(4)" class="sortable">Recebedor <i class="bi bi-arrow-down sort-icon"></th>
                     <th class="d-flex justify-content-center">Ações</th>
                 </tr>
             </thead>
