@@ -265,15 +265,15 @@
         <nav aria-label="Paginação">
             <ul class="pagination justify-content-center">
                 <?php if ($pagina > 1): ?>
-                    <li class="page-item"><a class="page-link" href="?page=<?= $pagina - 1 ?>&sort_col=<?= $_GET['sort_col'] ?>&sort_order=<?= $_GET['sort_order'] ?>">Anterior</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=<?= $pagina - 1 ?>&sort_col=<?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '1' ?>&sort_order=<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC' ?>">Anterior</a></li>
                 <?php endif; ?>
                 
                 <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                    <li class="page-item <?= ($pagina == $i) ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>&sort_col=<?= $_GET['sort_col'] ?>&sort_order=<?= $_GET['sort_order'] ?>"><?= $i ?></a></li>
+                    <li class="page-item <?= ($pagina == $i) ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>&sort_col=<?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '1' ?>&sort_order=<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC' ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
 
                 <?php if ($pagina < $total_paginas): ?>
-                    <li class="page-item"><a class="page-link" href="?page=<?= $pagina + 1 ?>&sort_col=<?= $_GET['sort_col'] ?>&sort_order=<?= $_GET['sort_order'] ?>">Próxima</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=<?= $pagina + 1 ?>&sort_col=<?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '1' ?>&sort_order=<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'DESC' ?>">Próxima</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
