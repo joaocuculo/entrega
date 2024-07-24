@@ -34,31 +34,8 @@ if (isset($_POST['cadastrar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
-            const senhaInput = document.getElementById('cad-senha');
-            mostrarSenhaBtn.addEventListener('click', function() {
-                senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
-                mostrarSenhaBtn.textContent = senhaInput.type === 'text' ? 'Esconder' : 'Mostrar';
-            });
-
-            const mostrarSenhaConfBtn = document.getElementById('mostrar-senha-conf');
-            const senhaConfInput = document.getElementById('cad-senha-conf');
-            mostrarSenhaConfBtn.addEventListener('click', function() {
-                senhaConfInput.type = senhaConfInput.type === 'password' ? 'text' : 'password';
-                mostrarSenhaConfBtn.textContent = senhaConfInput.type === 'text' ? 'Esconder' : 'Mostrar';
-            });
-        });
-
-        setTimeout(function() {
-            const mensagem = document.getElementById('mensagem');
-            if (mensagem) {
-                mensagem.style.display = 'none';
-            }
-        }, 3000);
-    </script>
     <style>
         * {
             color: white;
@@ -115,14 +92,14 @@ if (isset($_POST['cadastrar'])) {
                         <label for="cad-senha" class="form-label">Senha</label>
                         <div class="input-group">
                             <input type="password" class="form-control" name="cad-senha" id="cad-senha" required>
-                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha">Mostrar</button>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha"><i class="bi bi-eye"></i></button>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="cad-senha-conf" class="form-label">Confirme a senha</label>
                         <div class="input-group">
                             <input type="password" class="form-control" name="cad-senha-conf" id="cad-senha-conf" required>
-                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf">Mostrar</button>
+                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf"><i class="bi bi-eye"></i></button>
                         </div>
                     </div>
                     <button type="submit" name="cadastrar" class="btn btn-primary">Cadastrar</button>
@@ -132,6 +109,35 @@ if (isset($_POST['cadastrar'])) {
     </main>
 
     <?php require_once("../template/rodape01.php") ?>   
-        
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
+            const senhaInput = document.getElementById('cad-senha');
+
+            mostrarSenhaBtn.addEventListener('click', function() {
+                if (senhaInput.type === 'password') {
+                    senhaInput.type = 'text';
+                    mostrarSenhaBtn.innerHTML = '<i class="bi bi-eye-slash"></i>';
+                } else {
+                    senhaInput.type = 'password';
+                    mostrarSenhaBtn.innerHTML = '<i class="bi bi-eye"></i>';
+                }
+            });
+
+            const mostrarSenhaConfBtn = document.getElementById('mostrar-senha-conf');
+            const senhaConfInput = document.getElementById('cad-senha-conf');
+
+            mostrarSenhaConfBtn.addEventListener('click', function() {
+                if (senhaConfInput.type === 'password') {
+                    senhaConfInput.type = 'text';
+                    mostrarSenhaConfBtn.innerHTML = '<i class="bi bi-eye-slash"></i>';
+                } else {
+                    senhaConfInput.type = 'password';
+                    mostrarSenhaConfBtn.innerHTML = '<i class="bi bi-eye"></i>';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
