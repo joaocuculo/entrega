@@ -46,20 +46,20 @@
                             <?php endif; ?>
                         </ul>
                     </li>
+                    <!-- Mostrar apenas se o usuário tiver o nível adequado -->
+                    <?php if ($_SESSION['nivel'] == 2): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-list-ul"></i>  Listagem
+                            <i class="bi bi-list-ul"></i>  Listagem
                         </a>
                         
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="../listar/list-usuario.php">Usuário</a></li>
                             <li><a class="dropdown-item" href="../listar/list-tecnico.php">Técnico</a></li>
-                            <!-- Mostrar apenas se o usuário tiver o nível adequado -->
-                            <?php if ($_SESSION['nivel'] == 2): ?>
-                                <li><a class="dropdown-item" href="../listar/list-adm.php">Administrador</a></li>
-                            <?php endif; ?>
+                            <li><a class="dropdown-item" href="../listar/list-adm.php">Administrador</a></li>
                         </ul>
                     </li>
+                    <?php endif; ?>
                 </ul>
                  <div>
                      <a id="toggleButton"  style="cursor:pointer;margin-right: 1rem;">
