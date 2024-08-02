@@ -30,7 +30,7 @@
                         <a class="nav-link" href="../home/relatorio.php"><i class="bi bi-house"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../home/perfil.php"><i class="bi bi-person-circle"></i> Perfil</a>
+                        <a class="nav-link" href="../home/perfil.php"><i class="bi bi-person-fill"></i> Perfil</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false " >
