@@ -1,5 +1,6 @@
 <?php
     require_once('../verifica-autenticacao.php');
+    require_once('../verifica-nivel.php');
     require_once('../conexao.php');
 
     $V_WHERE = "";
@@ -44,8 +45,23 @@
 
     $total_paginas = ceil($total_registros / $itens_por_pagina);
 
+    $sort_col = isset($_GET['sort_col']) ? $_GET['sort_col'] : 2;
+    $sort_order = isset($_GET['sort_order']) ? $_GET['sort_order'] : 'ASC';
+
+    switch ($sort_col) {
+        case 0:
+            $sort_col = 'usuario.nome';
+            break;
+        case 1:
+            $sort_col = 'usuario.status';
+            break;
+        default:
+            $sort_col = 'usuario.status';
+    }
+
     $sql = "SELECT * FROM usuario
               WHERE 1 = 1 AND usuario.nivel = 2 " . $V_WHERE . $S_WHERE . "
+              ORDER BY $sort_col $sort_order
               LIMIT $itens_por_pagina OFFSET $offset";
     $resultado = mysqli_query($conexao, $sql);
 ?>
@@ -58,6 +74,42 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        function sortTable(columnIndex) {
+            let currentSortCol = <?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '2' ?>;
+            let currentSortOrder = '<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'ASC' ?>';
+
+            let sortOrder = 'DESC';
+            if (currentSortCol == columnIndex) {
+                sortOrder = currentSortOrder === 'DESC' ? 'ASC' : 'DESC';
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('sort_col', columnIndex);
+            urlParams.set('sort_order', sortOrder);
+            window.location.search = urlParams.toString();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentSortCol = '<?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '2' ?>';
+            const currentSortOrder = '<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'ASC' ?>';
+
+            const headers = document.querySelectorAll(".sortable");
+            headers.forEach((header, index) => {
+                if (index == currentSortCol) {
+                    header.classList.add(currentSortOrder.toLowerCase());
+                    const icon = header.querySelector('.sort-icon');
+                    if (currentSortOrder === 'DESC') {
+                        icon.classList.remove('bi-arrow-down');
+                        icon.classList.add('bi-arrow-up');
+                    } else {
+                        icon.classList.remove('bi-arrow-up');
+                        icon.classList.add('bi-arrow-down');
+                    }
+                }
+            });
+        });
+    </script>
     <style>
         * {
             color: white;
@@ -95,6 +147,48 @@
         option {
             color: black;
         }
+
+        .sort-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 5px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .sortable {
+            position: relative;
+            cursor: pointer;
+        }
+        .sortable:hover .sort-icon {
+            opacity: 1;
+        }
+
+        /* Estilo para botões de paginação */
+        .pagination .page-link {
+            color: #f8f9fa; /* Cor do texto dos botões */
+            background-color: #343a40; /* Cor de fundo dos botões */
+            border-color: #343a40; /* Cor da borda dos botões */
+        }
+
+        .pagination .page-link:hover {
+            color: #f8f9fa; /* Cor do texto dos botões ao passar o mouse */
+            background-color: #495057; /* Cor de fundo dos botões ao passar o mouse */
+            border-color: #495057; /* Cor da borda dos botões ao passar o mouse */
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #495057; /* Cor de fundo do botão da página ativa */
+            border-color: #495057; /* Cor da borda do botão da página ativa */
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d; /* Cor do texto dos botões desabilitados */
+            pointer-events: none; /* Desabilita a ação de clique nos botões desabilitados */
+            background-color: #343a40; /* Cor de fundo dos botões desabilitados */
+            border-color: #343a40; /* Cor da borda dos botões desabilitados */
+        }
     </style>
 </head>
 <body>
@@ -112,13 +206,13 @@
                 </select>
                 <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
             </form>
-            <a href="../cadastro/cad-adm.php" class="btn btn-success">Cadastrar Administrador</a>
+            <a href="../cadastro/cad-adm.php" class="btn btn-success"><i class="bi bi-plus-lg"></i> Cadastrar Administrador</a>
         </div>
         <table class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
-                    <th class="col-6">Técnico</th>
-                    <th class="col-4">Status</th>
+                    <th id="header0" onclick="sortTable(0)" class="sortable asc col-6">Administradores <i class="bi bi-arrow-down sort-icon"></th>
+                    <th id="header0" onclick="sortTable(1)" class="sortable col-4">Status <i class="bi bi-arrow-down sort-icon"></th>
                     <th class="d-flex justify-content-center">Ações</th>
                 </tr>
             </thead>

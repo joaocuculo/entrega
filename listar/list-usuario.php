@@ -32,7 +32,7 @@
         mysqli_query($conexao, $sql_ativar);
     }
 
-    $itens_por_pagina = 5;
+    $itens_por_pagina = 15;
 
     $pagina = isset($_GET['page']) ? $_GET['page'] : 1;
 
