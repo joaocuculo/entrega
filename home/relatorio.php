@@ -209,6 +209,11 @@
                 <?= $mensagem ?>
             </div>
         <?php } ?>   
+        <?php if (isset($_GET['mensagem'])) { ?>
+            <div id="mensagem" class="alert alert-danger mb-3" style="background-color:red; color:white; border:1px solid #8f0909;">
+                <?= $_GET['mensagem'] ?>
+            </div>
+        <?php } ?>   
         <h1>Relatório de Entrega</h1>
         <div class="d-flex justify-content-between align-items-end mb-2">
             <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
