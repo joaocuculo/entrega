@@ -5,7 +5,7 @@ if (!isset($_SESSION)) {
 }
 
 if (!isset($_SESSION['id'])) {
-    $mensagem = "Sessão expirada. Faça o login novamente.";
+    $mensagem = "Sessão expirada. Faça o login.";
     header("location: ../index.php?mensagem={$mensagem}");
 }
 
