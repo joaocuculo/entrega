@@ -9,28 +9,22 @@
         
         $id = $_POST['id'];
         $nome = $_POST['edit-nome-usuario'];
-        $senha = $_POST['edit-senha'];
-        $senhaConf = $_POST['edit-senha-conf'];
         $status = $_POST['edit-status'];
         $nivel = $_POST['edit-nivel'];
 
-        if ($senhaConf == $senha) {
-            $sql = "UPDATE usuario
-                       SET nome = '$nome',
-                          senha = '$senha',
-                         status = '$status',
-                          nivel = '$nivel'
-                     WHERE id = $id";
+        $sql = "UPDATE usuario
+                    SET nome = '$nome',
+                        status = '$status',
+                        nivel = '$nivel'
+                    WHERE id = $id";
 
-            mysqli_query($conexao, $sql);
+        mysqli_query($conexao, $sql);
 
-            $mensagem = "Alterado com sucesso!";
+        $mensagem = "Alterado com sucesso!";
 
-            header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
-            exit();
-        } else {
-            $mensagem = "As senhas inseridas são diferentes!";
-        }    
+        header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
+        exit();
+        
     }
 
     // Verifica se houve sucesso na atualização para exibir a mensagem
@@ -63,36 +57,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mostrarSenhaConfBtn = document.getElementById('mostrar-senha-conf');
-            const senhaConfInput = document.getElementById('edit-senha-conf');
-
-            mostrarSenhaConfBtn.addEventListener('click', function() {
-                if (senhaConfInput.type === 'password') {
-                    senhaConfInput.type = 'text';
-                    mostrarSenhaConfBtn.textContent = 'Esconder';
-                } else {
-                    senhaConfInput.type = 'password';
-                    mostrarSenhaConfBtn.textContent = 'Mostrar';
-                }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const mostrarSenhaBtn = document.getElementById('mostrar-senha');
-            const senhaInput = document.getElementById('edit-senha');
-
-            mostrarSenhaBtn.addEventListener('click', function() {
-                if (senhaInput.type === 'password') {
-                    senhaInput.type = 'text';
-                    mostrarSenhaBtn.textContent = 'Esconder';
-                } else {
-                    senhaInput.type = 'password';
-                    mostrarSenhaBtn.textContent = 'Mostrar';
-                }
-            });
-        });
-
         setTimeout(function() {
             document.getElementById('mensagem').style.display = 'none';
         }, 3000);
@@ -151,20 +115,6 @@
                     <div class="mb-3">
                         <label for="edit-nome-usuario" class="form-label">Nome</label>
                         <input type="text" class="form-control" name="edit-nome-usuario" id="edit-nome-usuario" value="<?= $linha['nome'] ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-senha" class="form-label">Senha</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" name="edit-senha" id="edit-senha" value="<?= $linha['senha'] ?>" required>
-                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha">Mostrar</button>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-senha-conf" class="form-label">Confirme a senha</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" name="edit-senha-conf" id="edit-senha-conf" value="<?= $linha['senha'] ?>" required>
-                            <button class="btn btn-outline-secondary" type="button" id="mostrar-senha-conf">Mostrar</button>
-                        </div>
                     </div>
                     <div class="mb-3 row">
                         <div class="col">
