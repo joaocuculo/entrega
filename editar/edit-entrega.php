@@ -27,7 +27,7 @@
         $data = new DateTime($_POST['edit-data']);
         $chamado = $_POST['edit-chamado'];
         $tecnico = $_POST['edit-tecnico'];
-        $recebedor = $_POST['edit-recebedor'];
+        $recebedor = ucfirst($_POST['edit-recebedor']);
         $dataString = $data->format('d/m/Y');
         
         $sql = "UPDATE tabela
