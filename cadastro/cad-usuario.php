@@ -6,7 +6,7 @@
     $mensagem = '';
 
     if (isset($_POST['cadastrar'])) {
-        $nome = $_POST['cad-nome-usuario'];
+        $nome = ucfirst($_POST['cad-nome-usuario']);
         $senha = $_POST['cad-senha'];
         $senhaConf = $_POST['cad-senha-conf'];
         $status = 1;
