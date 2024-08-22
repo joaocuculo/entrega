@@ -5,7 +5,7 @@
 
     if (isset($_POST['cadastrar'])) {
         
-        $nome = $_POST['cad-nome-tecnico'];
+        $nome = ucfirst($_POST['cad-nome-tecnico']);
         $status = 1;
 
         $sql = "INSERT INTO tecnico (nome, status) VALUES ('$nome', '$status')";
