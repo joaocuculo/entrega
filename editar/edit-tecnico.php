@@ -6,7 +6,7 @@
     if (isset($_POST['salvar'])) {
         
         $id = $_POST['id'];
-        $nome = $_POST['edit-nome-tecnico'];
+        $nome = ucfirst($_POST['edit-nome-tecnico']);
         $status = $_POST['edit-status'];
 
         $sql = "UPDATE tecnico
