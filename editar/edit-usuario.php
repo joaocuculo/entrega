@@ -8,7 +8,7 @@
     if (isset($_POST['salvar'])) {
         
         $id = $_POST['id'];
-        $nome = $_POST['edit-nome-usuario'];
+        $nome = ucfirst($_POST['edit-nome-usuario']);
         $status = $_POST['edit-status'];
         $nivel = $_POST['edit-nivel'];
 
