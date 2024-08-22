@@ -13,7 +13,7 @@
         $data = new DateTime($_POST['data']);
         $chamado = $_POST['chamado'];
         $tecnico = $_POST['tecnico'];
-        $recebedor = $_POST['recebedor'];
+        $recebedor = ucfirst($_POST['recebedor']);
         $dataString = $data->format('d/m/Y');
 
         $sql = "INSERT INTO tabela (id_usuario, data, chamado, id_tecnico, recebedor) VALUES ('$usuario', '$dataString', '$chamado', '$tecnico', '$recebedor')";
