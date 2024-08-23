@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/07/2024 às 21:42
+-- Tempo de geração: 22/08/2024 às 19:59
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -43,15 +43,9 @@ CREATE TABLE `tabela` (
 --
 
 INSERT INTO `tabela` (`id`, `id_usuario`, `data`, `chamado`, `id_tecnico`, `recebedor`) VALUES
-(12, 2, '25/12/2023', '022222', 4, 'Daniel'),
-(13, 2, '28/10/2022', '020232', 3, 'Ricardo'),
-(14, 2, '12/06/2024', '021235', 3, 'Pedro'),
 (15, 2, '15/04/2024', '023215', 2, 'Nilton'),
-(16, 2, '15/04/2024', '023215', 2, 'Nilton'),
 (17, 2, '06/09/2023', '021987', 5, 'Wellington'),
-(18, 1, '03/01/2024', '020987', 1, 'Murilo'),
 (19, 1, '14/05/2023', '021657', 2, 'Fausto'),
-(20, 1, '08/09/2023', '020147', 6, 'Tom'),
 (21, 1, '08/09/2023', '020147', 6, 'Tom'),
 (22, 1, '04/05/2024', '020004', 6, 'Robben'),
 (23, 2, '10/05/2023', '020369', 5, 'Silva'),
@@ -59,7 +53,17 @@ INSERT INTO `tabela` (`id`, `id_usuario`, `data`, `chamado`, `id_tecnico`, `rece
 (25, 1, '01/07/2024', '024212', 1, 'Cleiton'),
 (26, 1, '05/05/2024', '024267', 4, 'Douglas'),
 (27, 1, '11/09/2023', '022178', 7, 'Yago'),
-(28, 1, '07/07/2024', '020369', 1, 'Fabrício');
+(28, 1, '07/07/2024', '020369', 1, 'Fabrício'),
+(29, 1, '12/05/2023', '020006', 7, 'Angélica'),
+(30, 1, '20/02/2023', '021245', 5, 'Dudu'),
+(31, 1, '20/02/2023', '021245', 5, 'Dudu'),
+(32, 1, '20/02/2023', '021245', 5, 'Dudu'),
+(34, 1, '20/02/2023', '021245', 5, 'Dudu'),
+(36, 1, '12/05/2024', '021231', 6, 'Ziraldo'),
+(37, 8, '02/08/2024', '025000', 1, 'Belzebu'),
+(38, 3, '25/05/2024', '025014', 1, 'William'),
+(39, 4, '14/06/2024', '024100', 7, 'Eric'),
+(40, 9, '21/05/2024', '024781', 2, 'Ricardo');
 
 -- --------------------------------------------------------
 
@@ -94,8 +98,8 @@ INSERT INTO `tecnico` (`id`, `nome`, `status`) VALUES
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `senha` varchar(100) NOT NULL,
+  `nome` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `senha` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `status` int(1) NOT NULL,
   `nivel` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -109,9 +113,12 @@ INSERT INTO `usuario` (`id`, `nome`, `senha`, `status`, `nivel`) VALUES
 (2, 'André', '4321', 1, 2),
 (3, 'Eduardo', '2345', 1, 1),
 (4, 'Marcos', '9876', 1, 1),
-(5, 'José', 'jose', 2, 1),
+(5, 'José', 'jose', 1, 1),
 (6, 'Cesar', 'soucesar', 2, 1),
-(7, 'Adriel', '0987', 1, 2);
+(7, 'Adriel', '0987', 2, 2),
+(8, 'Antonimus', '123', 1, 2),
+(9, 'Marçal', 'souMarçal', 1, 1),
+(10, 'Antônio', 'olamundo', 1, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -145,7 +152,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `tabela`
 --
 ALTER TABLE `tabela`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de tabela `tecnico`
@@ -157,7 +164,7 @@ ALTER TABLE `tecnico`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restrições para tabelas despejadas
