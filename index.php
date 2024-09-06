@@ -129,7 +129,7 @@
     <div class="bg-overlay"></div>
     <div id="container">
         <div class="box-login">
-            <h1 class="title-gradient">Sistemas de Entregas</h1>
+            <h1 class="title-gradient">Painel de Saídas</h1>
             <form action="autenticacao.php" method="post" class="box">
                 <div style="color: white;">Faça o seu login</div>
                 <?php if (isset($_GET['mensagem'])) { ?>

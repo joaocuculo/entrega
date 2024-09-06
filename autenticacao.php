@@ -6,7 +6,7 @@
 
         $sql = "SELECT * FROM usuario 
                         WHERE nome = '{$nome}' 
-                          AND senha = '{$senha}'";
+                          AND senha ='{$senha}'";
 
         require_once("conexao.php");
         $resultado = mysqli_query($conexao, $sql);
@@ -34,3 +34,5 @@
         }
     }
 ?>
+
+
