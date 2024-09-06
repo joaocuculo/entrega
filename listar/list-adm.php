@@ -197,7 +197,7 @@
     <main class="container" style="margin-top: 100px;">
         <h1>Listagem de Administradores</h1>
         <div class="d-flex justify-content-between align-items-end mb-2">
-            <form class="d-flex col-6" method="post" role="search">
+            <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">
                 <input class="form-control me-2" type="search" name="search" placeholder="Pesquisar" aria-label="Search">
                 <select class="form-select me-2" name="search-status" id="search-status">
                     <option selected value="">Status</option>
