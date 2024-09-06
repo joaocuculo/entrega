@@ -82,7 +82,7 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container" style="margin-top: 100px;">
-        <h1 class="text-center mb-4">Cadastro de Administrador</h1>
+        <h1 class="text-center mb-4"> <i class="bi bi-person-gear"></i> Cadastro de Administrador </h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
