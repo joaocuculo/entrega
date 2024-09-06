@@ -2,6 +2,7 @@
     require_once('../verifica-autenticacao.php');
     require_once('../conexao.php');
 
+  
     $V_WHERE = "";
     $T_WHERE = "";
     if (isset($_POST['pesquisar'])) {
@@ -71,9 +72,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Entrega</title>
+    <title>Relatório de Entrega</title> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -193,10 +195,10 @@
         }
 
         .pagination .page-item.disabled .page-link {
-            color: #6c757d; /* Cor do texto dos botões desabilitados */
-            pointer-events: none; /* Desabilita a ação de clique nos botões desabilitados */
-            background-color: #343a40; /* Cor de fundo dos botões desabilitados */
-            border-color: #343a40; /* Cor da borda dos botões desabilitados */
+            color: #6c757d; /* Cor do texto dos botões desligados */
+            pointer-events: none; /* Desabilita a ação de clique nos botões desligados */
+            background-color: #343a40; /* Cor de fundo dos botões desligados */
+            border-color: #343a40; /* cor da borda dos boteos desligados */
         }
     </style>
 </head>
