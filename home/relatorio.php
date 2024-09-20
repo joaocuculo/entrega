@@ -212,7 +212,7 @@
             </div>
         <?php } ?>   
         <?php if (isset($_GET['mensagem'])) { ?>
-            <div id="mensagem" class="alert alert-danger mb-3" style="background-color:red; color:white; border:1px solid #8f0909;">
+            <div id="mensagem" style="color:red; text-align:center;">
                 <?= $_GET['mensagem'] ?>
             </div>
         <?php } ?>   
