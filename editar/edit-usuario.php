@@ -20,16 +20,36 @@
 
         mysqli_query($conexao, $sql);
 
-        $mensagem = "Alterado com sucesso!";
-
         header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
         exit();
         
     }
 
+    if (isset($_POST['redefinir'])) {
+        
+        $id = $_POST['id'];
+        $senha = 'Mudar@123';
+
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+        $sql = "UPDATE usuario
+                    SET senha = '$senhaHash'
+                    WHERE id = $id";
+
+        mysqli_query($conexao, $sql);
+
+        header("Location: {$_SERVER['PHP_SELF']}?id=$id&reset=true");
+        exit();
+    }
+
     // Verifica se houve sucesso na atualização para exibir a mensagem
     if (isset($_GET['success']) && $_GET['success'] == 'true') {
         $mensagem = "Alterado com sucesso!";
+    }
+    
+    // Verifica se houve sucesso na redefinição de senha para exibir a mensagem
+    if (isset($_GET['reset']) && $_GET['reset'] == 'true') {
+        $mensagem = "Senha redefinida.";
     }
     
     $sql = "SELECT * FROM usuario WHERE id = " . $_GET['id'];
@@ -142,13 +162,46 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
+                        <span style="text-decoration:underline; cursor:pointer;" id="redefinir-senha">Redefinir senha</span>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-redefinir-senha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background: linear-gradient(to right, #000307, #00070E); border-bottom: 1px solid #000B18;">
+                                    <h5 class="modal-title">Redefinir Senha</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="background-color: #000B18;">
+                                    <div class="mb-3">
+                                        <p>Você tem certeza que deseja redefinir a senha do usuário para a senha padrão?</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="background: linear-gradient(to right, #000307, #00070E); border-top: 1px solid #000B18;">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary" name="redefinir" id="redefinir">Redefinir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </main>
 
     <?php require_once("../template/rodape01.php") ?> 
+
+    <script>
+        const redefinirSenha = document.getElementById('redefinir-senha');
+        var modal = new bootstrap.Modal(document.getElementById('modal-redefinir-senha'));
+
+        redefinirSenha.addEventListener('click', function() {
+            modal.show();
+        })
+    </script>
 
 </body>
 </html>

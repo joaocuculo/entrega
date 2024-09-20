@@ -91,6 +91,12 @@
             transition: 3s;
         }
 
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         /* Estilos para o Sticky Footer */
         #sticky-footer {
             flex-shrink: 0; /* Evita que o footer seja reduzido */
