@@ -205,7 +205,7 @@
                     <option value="1">Ativo</option>
                     <option value="2">Inativo</option>
                 </select>
-                <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
+                <button class="btn btn-light" type="submit" name="pesquisar"><i class="bi bi-search" style="color: black; "></i></button>
             </form>
             <?php if ($_SESSION['nivel'] == 2): ?>
                 <a href="../cadastro/cad-usuario.php" class="btn btn-success"><i class="bi bi-plus-lg"></i> Cadastrar Usuário</a>
