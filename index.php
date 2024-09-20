@@ -55,7 +55,7 @@
         .container .eye,
         .container .eye-slash {
             position: relative;
-            top: -20px; /* para o icone do olho ir para cima tem que por o numero do top no negativo */
+            top: -37px; /* para o icone do olho ir para cima tem que por o numero do top no negativo */
             right: 0;
             height: 100%;
             width: 14px;
@@ -146,6 +146,7 @@
                         <i class="bi bi-eye-slash-fill eye-slash"></i>
                     </label>
                 </div>
+                <span style="font-size:12px;cursor:pointer;" id="esqueci-senha">Esqueci minha senha</span>
                 <button type="submit" name="entrar">Entrar</button>
                 <!-- Aqui está a imagem após o botão -->
                 <img src="assets/img/dti-logo-branca.png" alt="Logo DTI" style="height: 55px;">
@@ -166,6 +167,12 @@
                 eyeSlash.classList.toggle('d-none');
             });
         });
+
+        const esqueciSenha = document.getElementById('esqueci-senha');
+
+        esqueciSenha.addEventListener('click', function() {
+            alert('Contate o Administrador para redefinir sua senha.');
+        })
     </script>
 </body>
 </html>
