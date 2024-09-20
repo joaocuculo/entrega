@@ -1,8 +1,11 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Entregas</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script type="text/javascript" src="js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
         .title-gradient {
@@ -22,9 +25,7 @@
             border: none;
             border-bottom: 1px solid #000; /* Linha em vez de caixa */
             width: 100%;
-            padding: 8px 0;
             color: white; /* Cor do texto */
-            margin-bottom: 15px; /* Espaço inferior */
         }
         .form-control::placeholder {
             color: white; /* Cor do placeholder */
@@ -38,7 +39,7 @@
             display: flex;
             align-items: center;
         }
-        .password-container .container {
+        .container {
             position: absolute;
             right: 0;
             cursor: pointer;
@@ -54,7 +55,7 @@
         .container .eye,
         .container .eye-slash {
             position: relative;
-            top: -21; /* para o icone do olho ir para cima tem que por o numero do top no negativo */
+            top: -20px; /* para o icone do olho ir para cima tem que por o numero do top no negativo */
             right: 0;
             height: 100%;
             width: 14px;
@@ -79,12 +80,10 @@
         #nome,
         #senha {
             width: 100%; /* ocupa todo o espaço disponível */
-            padding: 8px 0; /* Espaçamento interno do campo */
             color: white; /* Cor do texto */
             border: none; /* Remove a borda padrão */
             border-bottom: 1px solid #000; /* Adiciona linha inferior */
             background: none; /* Fundo transparente */
-            margin-bottom: 15px; /* Espaço inferior */
         }
         #nome::placeholder,
         #senha::placeholder {
@@ -131,9 +130,10 @@
         <div class="box-login">
             <h1 class="title-gradient">Painel de Saídas</h1>
             <form action="autenticacao.php" method="post" class="box">
-                <div style="color: white;">Faça o seu login</div>
-                <?php if (isset($_GET['mensagem'])) { ?>
-                    <div id="mensagem" style="width:100%; height:25px; color:white; background-color:red; text-align:center; padding-top:10px; border:1px solid #8f0909; border-radius:6px;">
+                <?php if (!isset($_GET['mensagem']) || isset($_SESSION['id'])) { ?>
+                    <div style="color: white;">Faça o login</div>
+                <?php } else { ?>
+                    <div id="mensagem" style="color:red; text-align:center;">
                         <?= $_GET['mensagem'] ?>
                     </div>
                 <?php } ?>
