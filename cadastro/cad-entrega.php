@@ -87,7 +87,7 @@
             <div class="col-md-6">
                 <form method="post">
                     <?php if (isset($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-success mb-3" style="background-color:#051B11; color:white;">
+                        <div id="mensagem" style="color:limegreen; text-align:center;">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>
@@ -110,7 +110,7 @@
                         <select name="tecnico" id="tecnico" class="form-control" required>
                             <option value="">Selecione</option>
                             <?php
-                                $sql = "SELECT * FROM tecnico ORDER BY nome";
+                                $sql = "SELECT * FROM tecnico WHERE status = 1 ORDER BY nome";
                                 $resultado = mysqli_query($conexao, $sql);
                                 while ($linhaTec = mysqli_fetch_array($resultado)):
                                     $id = $linhaTec['id'];

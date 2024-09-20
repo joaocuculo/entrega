@@ -90,7 +90,7 @@
             <div class="col-md-6">
                 <form method="post">
                     <?php if (isset($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-success mb-3" style="background-color:#051B11; color:white;">
+                        <div id="mensagem" style="color:limegreen; text-align:center;">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>
