@@ -55,7 +55,6 @@ button:hover {
 body {
     width: 100%;
     height: 100vh;
-    background-image: url('https://www.umuarama.pr.gov.br/files/Seos/image/paco-municipal-p-1582142895.jpg');
     background-repeat: no-repeat;
     background-size: 100%;
     
@@ -149,3 +148,5 @@ body {
         justify-content: center;
         align-items: center;
     }
+
+    
