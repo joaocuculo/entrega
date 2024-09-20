@@ -8,27 +8,44 @@
     if (isset($_POST['salvar'])) {
         
         $id = $_POST['id'];
-        $nome = ucfirst($_POST['edit-nome-usuario']);
+        $nome = ucfirst(trim($_POST['edit-nome-usuario']));
         $status = $_POST['edit-status'];
         $nivel = $_POST['edit-nivel'];
 
-        $sql = "UPDATE usuario
-                    SET nome = '$nome',
-                        status = '$status',
-                        nivel = '$nivel'
-                    WHERE id = $id";
+        // Verifica se o nome existe no banco de dados
+        $stmt = $conexao->prepare('SELECT COUNT(*) FROM usuario WHERE nome = ? AND id != ?');
+        $stmt->bind_param('si', $nome, $id);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
+ 
+        if ($count > 0) {
 
-        mysqli_query($conexao, $sql);
+            header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=false");
+            exit();
 
-        header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
-        exit();
+        } else {
+
+            $sql = "UPDATE usuario
+                        SET nome = '$nome',
+                            status = '$status',
+                            nivel = '$nivel'
+                        WHERE id = $id";
+
+            mysqli_query($conexao, $sql);
+
+            header("Location: {$_SERVER['PHP_SELF']}?id=$id&success=true");
+            exit();
+
+        }
         
     }
 
     if (isset($_POST['redefinir'])) {
         
         $id = $_POST['id'];
-        $senha = 'Mudar@123';
+        $senha = '1234';
 
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
@@ -45,6 +62,8 @@
     // Verifica se houve sucesso na atualização para exibir a mensagem
     if (isset($_GET['success']) && $_GET['success'] == 'true') {
         $mensagem = "Alterado com sucesso!";
+    } elseif (isset($_GET['success']) && $_GET['success'] == 'false') {
+        $mensagem = "Esse nome de usuário já existe!";
     }
     
     // Verifica se houve sucesso na redefinição de senha para exibir a mensagem
@@ -127,7 +146,7 @@
             <div class="col-md-6">
                 <form method="post">
                     <?php if (!empty($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-success mb-3" style="background-color:#051B11; color:white;">
+                        <div id="mensagem" style="color: <?php echo (strpos($mensagem, 'sucesso') !== false) ? 'limegreen;' : 'red;'; ?> text-align:center;">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>  

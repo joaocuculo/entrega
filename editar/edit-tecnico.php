@@ -9,14 +9,29 @@
         $nome = ucfirst($_POST['edit-nome-tecnico']);
         $status = $_POST['edit-status'];
 
-        $sql = "UPDATE tecnico
-                   SET nome = '$nome',
-                     status = '$status'
-                 WHERE id = $id";
-        
-        mysqli_query($conexao, $sql);
+        // Verifica se o nome existe no banco de dados
+        $stmt = $conexao->prepare('SELECT COUNT(*) FROM tecnico WHERE nome = ?');
+        $stmt->bind_param('s', $nome);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
+ 
+        if ($count > 0) {
 
-        $mensagem = "Alterado com sucesso!";
+            $mensagem = "Esse nome de técnico já existe!";
+
+        } else {
+
+            $sql = "UPDATE tecnico
+                    SET nome = '$nome',
+                        status = '$status'
+                    WHERE id = $id";
+            
+            mysqli_query($conexao, $sql);
+
+            $mensagem = "Alterado com sucesso!";
+        }
     }
     $sql = "SELECT * FROM tecnico WHERE id = " . $_GET['id'];
     $resultado = mysqli_query($conexao, $sql);
@@ -87,7 +102,7 @@
             <div class="col-md-6">
                 <form method="post">
                     <?php if (isset($mensagem)) { ?>
-                        <div id="mensagem" class="alert alert-success mb-3" style="background-color:#051B11; color:white;">
+                        <div id="mensagem" style="color: <?php echo (strpos($mensagem, 'sucesso') !== false) ? 'limegreen;' : 'red;'; ?> text-align:center;">
                             <?= $mensagem ?>
                         </div>
                     <?php } ?>
