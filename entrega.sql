@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/08/2024 às 19:59
+-- Tempo de geração: 20/09/2024 às 18:40
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -86,7 +86,7 @@ INSERT INTO `tecnico` (`id`, `nome`, `status`) VALUES
 (2, 'André', 1),
 (3, 'Eduardo', 1),
 (4, 'João', 1),
-(5, 'Eduardo M.', 1),
+(5, 'Eduardo Vergentino', 1),
 (6, 'Marcos', 1),
 (7, 'Otávio', 2);
 
@@ -109,16 +109,21 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nome`, `senha`, `status`, `nivel`) VALUES
-(1, 'Joao', '1234', 1, 2),
-(2, 'André', '4321', 1, 2),
+(1, 'Joao', '$2y$10$p199TEr32XHlTyNBbDIKu.TILrsuWDNsy/a4GNAfmsOEgDD8xPxa6', 1, 2),
+(2, 'André', 'd93591bdf7860e1e4ee2fca799911215', 2, 2),
 (3, 'Eduardo', '2345', 1, 1),
-(4, 'Marcos', '9876', 1, 1),
+(4, 'Marcos', '$2y$10$Td4mp.PcYoB9JRSj/6rP5ucw.vmfHQWdNZaVZZPvJ/9JiWg2pT9bW', 1, 1),
 (5, 'José', 'jose', 1, 1),
-(6, 'Cesar', 'soucesar', 2, 1),
+(6, 'Cesar', '$2y$10$b5kCH9zvvA8y0xLblxxShOU5p/EK/JPruHu2Ma6ojdo9DMStaLjyK', 2, 1),
 (7, 'Adriel', '0987', 2, 2),
 (8, 'Antonimus', '123', 1, 2),
-(9, 'Marçal', 'souMarçal', 1, 1),
-(10, 'Antônio', 'olamundo', 1, 1);
+(9, 'Marçal', '$2y$10$bVtHC.6L6lYraOqH6jImR.o/m6o9E5CjLtiv3PIwrZQv7DM15FSX2', 1, 1),
+(10, 'Antônio', '$2y$10$wKy20D/X/sYw.zxL40kBJOEu9jTXwh.2dCCLXdfHROCtUBw9OysN6', 1, 1),
+(12, 'Cristiano', '$2y$10$RlrjCvSby11emywGyYoUT.tsbxG1L0Ak2oJWKkys9PN99Ee1IdNoq', 1, 1),
+(14, 'Andre', '$2y$10$rISBFj/omHrgkImMUTmLQeg8awJOM3wxon3WSjHrfDCpKnXyuQrSu', 1, 2),
+(15, 'Olavo', '$2y$10$npmXsODP91qvUjgNvEuFYu.8J8IDy3iNjshHyHcEZ57i1dObjbVwm', 1, 2),
+(16, 'Cesar', 'Mudar@123', 1, 1),
+(17, 'Cesar', '$2y$10$sT87fwgJM.HKrij6JxjfQuQwnzmv9QmGFV87CnjMSSSRpa9Og6DoK', 1, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -164,7 +169,7 @@ ALTER TABLE `tecnico`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restrições para tabelas despejadas
