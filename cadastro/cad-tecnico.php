@@ -3,16 +3,33 @@
     require_once('../verifica-nivel.php');
     require_once('../conexao.php');
 
+    $isInvalid = false;
+
     if (isset($_POST['cadastrar'])) {
         
         $nome = ucfirst($_POST['cad-nome-tecnico']);
         $status = 1;
 
-        $sql = "INSERT INTO tecnico (nome, status) VALUES ('$nome', '$status')";
-        
-        mysqli_query($conexao, $sql);
+        // Verifica se o nome existe no banco de dados
+        $stmt = $conexao->prepare('SELECT COUNT(*) FROM tecnico WHERE nome = ?');
+        $stmt->bind_param('s', $nome);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
 
-        $mensagem = "Cadastrado com sucesso!";
+        if ($count > 0) {
+
+            $isInvalid = true;
+            
+        } else {
+
+            $sql = "INSERT INTO tecnico (nome, status) VALUES ('$nome', '$status')";
+            
+            mysqli_query($conexao, $sql);
+
+            $mensagem = "Cadastrado com sucesso!";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -20,7 +37,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Técnicos</title>
+    <title>Cadastrar Técnico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -68,7 +85,7 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container" style="margin-top: 100px;">
-        <h1 class="text-center mb-4"> <i class="bi bi-person-gear"></i> Cadastro de Técnicos</h1>
+        <h1 class="text-center mb-4"> <i class="bi bi-person-gear"></i> Cadastrar Técnico</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
@@ -79,7 +96,12 @@
                     <?php } ?>
                     <div class="mb-3">
                         <label for="cad-nome-tecnico" class="form-label">Nome do Técnico</label>
-                        <input type="text" class="form-control" name="cad-nome-tecnico" id="cad-nome-tecnico" required>
+                        <input type="text" class="form-control <?= $isInvalid ? 'is-invalid' : '' ?>" name="cad-nome-tecnico" id="cad-nome-tecnico" required >
+                        <?php if ($isInvalid) { ?>
+                            <div class="invalid-feedback">
+                                Este nome de técnico já existe.
+                            </div>
+                        <?php } ?>
                     </div>
                     <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
                 </form>

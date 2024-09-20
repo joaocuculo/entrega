@@ -28,7 +28,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Entrega</title>
+    <title>Cadastrar Entrega</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -62,6 +62,12 @@
             transition: 3s;
         }
 
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         /* Estilos para o Sticky Footer */
         #sticky-footer {
             flex-shrink: 0; /* Evita que o footer seja reduzido */
@@ -76,7 +82,7 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container" style="margin-top: 100px;">
-        <h1 class="text-center mb-4" > <i class="bi bi-boxes"></i> Cadastro de Entrega</h1>
+        <h1 class="text-center mb-4" > <i class="bi bi-boxes"></i> Cadastrar Entrega</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form method="post">
