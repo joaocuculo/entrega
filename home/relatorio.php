@@ -232,7 +232,7 @@
                         endwhile;
                     ?>
                 </select>
-                <button class="btn btn-outline-success" type="submit" name="pesquisar">Pesquisar</button>
+                <button class="btn btn-light" type="submit" name="pesquisar"><i class="bi bi-search" style="color: black; "></i></button>
             </form>
             <a href="../cadastro/cad-entrega.php" class="btn btn-success"><i class="bi bi-plus-lg"></i> Cadastrar Entrega</a>
         </div>
