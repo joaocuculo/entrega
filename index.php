@@ -146,7 +146,7 @@
                         <i class="bi bi-eye-slash-fill eye-slash"></i>
                     </label>
                 </div>
-                <span style="font-size:12px;cursor:pointer;" id="esqueci-senha">Esqueci minha senha</span>
+                <span style="font-size:12px;cursor:pointer;color:#ffffffb3;" id="esqueci-senha">Esqueci minha senha</span>
                 <button type="submit" name="entrar">Entrar</button>
                 <!-- Aqui está a imagem após o botão -->
                 <img src="assets/img/dti-logo-branca.png" alt="Logo DTI" style="height: 55px;">
@@ -169,10 +169,20 @@
         });
 
         const esqueciSenha = document.getElementById('esqueci-senha');
+        
+        esqueciSenha.addEventListener('mouseover', function() {
+            esqueciSenha.style.color = '#3473C5';
+            esqueciSenha.style.textDecoration = 'underline';
+        });
+        
+        esqueciSenha.addEventListener('mouseout', function() {
+            esqueciSenha.style.color = '#ffffffb3';
+            esqueciSenha.style.textDecoration = 'none';
+        });
 
         esqueciSenha.addEventListener('click', function() {
             alert('Contate o Administrador para redefinir sua senha.');
-        })
+        });
     </script>
 </body>
 </html>
