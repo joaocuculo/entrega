@@ -38,7 +38,7 @@
 
     $offset = ($pagina - 1) * $itens_por_pagina;
 
-    $sql_count = "SELECT COUNT(*) AS total FROM usuario WHERE 1 = 1 " . $V_WHERE . $S_WHERE;
+    $sql_count = "SELECT COUNT(*) AS total FROM usuario WHERE 1 = 1 " . $V_WHERE . $S_WHERE . " AND nivel = 2";
     $resultado_count = mysqli_query($conexao, $sql_count);
     $linha_count = mysqli_fetch_assoc($resultado_count);
     $total_registros = $linha_count['total'];
