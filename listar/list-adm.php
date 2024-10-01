@@ -10,7 +10,7 @@
         $searchStatus = intval($_POST['search-status']);
         
         if (!empty($search)) {
-            $V_WHERE = " AND usuario.nome LIKE '%$search%'";
+            $V_WHERE = " AND LOWER(usuario.nome) LIKE LOWER('%$search%')";
         }
         if (!empty($searchStatus)) {
             $S_WHERE = " AND usuario.status = '$searchStatus'";
@@ -21,8 +21,13 @@
     if (isset($_POST['desativar'])) {
         $idDesativar = $_POST['input-desativar'];
 
-        $sql_desativar = "UPDATE usuario SET status = 2 WHERE id = $idDesativar";
-        mysqli_query($conexao, $sql_desativar);
+        if ($idDesativar !== $_SESSION['id']) {
+            $sql_desativar = "UPDATE usuario SET status = 2 WHERE id = $idDesativar";
+            mysqli_query($conexao, $sql_desativar);
+        } else {
+            $mensagem = "Não é possível executar essa ação!";
+        }
+            
     }
 
     if (isset($_POST['ativar'])) {
@@ -76,6 +81,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+        setTimeout(function() {
+            document.getElementById('mensagem').style.display = 'none';
+        }, 3000);
+
         function sortTable(columnIndex) {
             let currentSortCol = <?= isset($_GET['sort_col']) ? $_GET['sort_col'] : '2' ?>;
             let currentSortOrder = '<?= isset($_GET['sort_order']) ? $_GET['sort_order'] : 'ASC' ?>';
@@ -196,6 +205,16 @@
     <?php require_once("../template/menu01.php") ?>    
 
     <main class="container" style="margin-top: 100px;">
+        <?php if (!empty($mensagem)) { ?>
+            <div id="mensagem" style="color: <?php echo (strpos($mensagem, 'sucesso') !== false) ? 'limegreen;' : 'red;'; ?> text-align:center;">
+                <?= $mensagem ?>
+            </div>
+        <?php } ?>   
+        <?php if (isset($_GET['mensagem'])) { ?>
+            <div id="mensagem" style="color:red; text-align:center;">
+                <?= $_GET['mensagem'] ?>
+            </div>
+        <?php } ?>
         <h1>Listagem de Administradores</h1>
         <div class="d-flex justify-content-between align-items-end mb-2">
             <form class="d-flex col-6 mt-2 mb-2" method="post" role="search">

@@ -11,7 +11,7 @@
         $searchStatus = intval($_POST['search-status']);
         
         if (!empty($search)) {
-            $V_WHERE = " AND usuario.nome LIKE '%$search%'";
+            $V_WHERE = " AND LOWER(usuario.nome) LIKE LOWER('%$search%')";
         }
         if (!empty($searchStatus)) {
             $S_WHERE = " AND usuario.status = '$searchStatus'";
