@@ -10,7 +10,7 @@
         $tecnico = $_POST['search-tec'];
 
         if (!empty($search)) {
-            $V_WHERE = " AND (tabela.chamado LIKE '%$search%' OR tabela.data LIKE '%$search%' OR usuario.nome LIKE '%$search%' OR tabela.recebedor LIKE '%$search%')";
+            $V_WHERE = " AND (tabela.chamado LIKE '%$search%' OR tabela.data LIKE '%$search%' OR LOWER(usuario.nome) LIKE LOWER('%$search%') OR tabela.recebedor LIKE '%$search%')";
         }
         if (!empty($tecnico)) {
             $T_WHERE = " AND tabela.id_tecnico = '$tecnico'";
@@ -20,7 +20,15 @@
     if (isset($_GET['id'])) {
         $sql = "DELETE FROM tabela WHERE id = " . $_GET['id'];
         mysqli_query($conexao, $sql);
-        $mensagem = "Exclusão realizada com sucesso!";
+        $_SESSION['mensagem'] = "Exclusão realizada com sucesso!";
+
+        header("Location: relatorio.php");
+        exit;
+    }
+
+    if (isset($_SESSION['mensagem'])) {
+        $mensagem = $_SESSION['mensagem']; 
+        unset($_SESSION['mensagem']); 
     }
 
     $itens_por_pagina = 15;
