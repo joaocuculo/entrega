@@ -10,8 +10,8 @@
         $status = $_POST['edit-status'];
 
         // Verifica se o nome existe no banco de dados
-        $stmt = $conexao->prepare('SELECT COUNT(*) FROM tecnico WHERE nome = ?');
-        $stmt->bind_param('s', $nome);
+        $stmt = $conexao->prepare('SELECT COUNT(*) FROM tecnico WHERE nome = ? AND id != ?');
+        $stmt->bind_param('si', $nome, $id);
         $stmt->execute();
         $stmt->bind_result($count);
         $stmt->fetch();

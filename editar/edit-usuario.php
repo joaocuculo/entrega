@@ -59,16 +59,23 @@
         exit();
     }
 
-    // Verifica se houve sucesso na atualização para exibir a mensagem
-    if (isset($_GET['success']) && $_GET['success'] == 'true') {
-        $mensagem = "Alterado com sucesso!";
-    } elseif (isset($_GET['success']) && $_GET['success'] == 'false') {
-        $mensagem = "Esse nome de usuário já existe!";
+    if (isset($_GET['success']) || isset($_GET['reset'])) {
+
+        if ($_GET['success'] == 'true') {
+            $_SESSION['mensagem'] = "Alterado com sucesso!";
+        } elseif ($_GET['success'] == 'false') {
+            $_SESSION['mensagem'] = "Esse nome de usuário já existe!";
+        } elseif ($_GET['reset'] == 'true') {
+            $_SESSION['mensagem'] = "Senha redefinida com sucesso.";
+        }
+        
+        header("Location: {$_SERVER['PHP_SELF']}?id={$_GET['id']}");
+        exit();
     }
-    
-    // Verifica se houve sucesso na redefinição de senha para exibir a mensagem
-    if (isset($_GET['reset']) && $_GET['reset'] == 'true') {
-        $mensagem = "Senha redefinida.";
+
+    if (isset($_SESSION['mensagem'])) {
+        $mensagem = $_SESSION['mensagem'];
+        unset($_SESSION['mensagem']); // Remove a mensagem após exibi-la
     }
     
     $sql = "SELECT * FROM usuario WHERE id = " . $_GET['id'];
@@ -184,7 +191,7 @@
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <button type="submit" class="btn btn-success" name="salvar">Salvar</button>
-                        <span style="text-decoration:underline; cursor:pointer;" id="redefinir-senha">Redefinir senha</span>
+                        <span style="cursor:pointer;" id="redefinir-senha">Redefinir senha</span>
                     </div>
 
                     <!-- Modal -->

@@ -47,8 +47,21 @@
     }
 
     // Verifica se houve sucesso na atualização para exibir a mensagem
-    if (isset($_GET['success']) && $_GET['success'] == 'true') {
-        $mensagem = "Alterado com sucesso!";
+    if (isset($_GET['success'])) {
+
+        if ($_GET['success'] == 'true') {
+            $_SESSION['mensagem'] = "Alterado com sucesso!";
+        } elseif ($_GET['success'] == 'false') {
+            $_SESSION['mensagem'] = "Erro";
+        }
+        
+        header("Location: {$_SERVER['PHP_SELF']}?id={$_GET['id']}");
+        exit();
+    }
+
+    if (isset($_SESSION['mensagem'])) {
+        $mensagem = $_SESSION['mensagem'];
+        unset($_SESSION['mensagem']); // Remove a mensagem após exibi-la
     }
 
     ?>
