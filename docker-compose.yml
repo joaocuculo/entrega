@@ -26,6 +26,18 @@ services:
     networks:
       - app-network
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: entrega-phpmyadmin
+    restart: always
+    ports:
+      - "81:80"
+    links:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
